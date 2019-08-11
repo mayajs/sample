@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
+import server from "./app.module";
 import http from "http";
-import server from "./server";
 
 class Maya {
   constructor(private app: Express) {
@@ -10,9 +10,7 @@ class Maya {
   start(port?: number | string): void {
     port = this.normalizePort(port || 3333);
     const server = http.createServer(this.app);
-    server.listen(port, () => {
-      this.onListen(port);
-    });
+    server.listen(port, this.onListen(port));
   }
 
   normalizePort(val: any): number {
@@ -20,8 +18,8 @@ class Maya {
     return isNaN(port) ? val : port;
   }
 
-  onListen(port: any): void {
-    console.log("\x1b[32mListening on port:", `\x1b[36m${port}\x1b[0m`);
+  onListen(port: any): () => void {
+    return () => console.log("\x1b[32mListening on port:", `\x1b[36m${port}\x1b[0m`);
   }
 
   unhandleErrors(app: Express): void {

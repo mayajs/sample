@@ -2,7 +2,7 @@ import { Express } from "express";
 import maya from "@mayajs/core";
 import { SampleController } from "./controllers/sample.controllers";
 
-class Server {
+class AppModule {
   maya: maya;
 
   constructor() {
@@ -25,4 +25,4 @@ class Server {
   }
 }
 
-export default new Server();
+export default new AppModule();
