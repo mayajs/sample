@@ -2,7 +2,7 @@ import { Controller, Delete, Get, Patch, Post, Put } from "@mayajs/core";
 import { Request, Response, NextFunction } from "express";
 
 @Controller({
-  model: "sample.model",
+  model: "./sample.model",
   route: "/sample",
 })
 export class SampleController {

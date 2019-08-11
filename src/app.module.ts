@@ -1,4 +1,4 @@
-import { SampleController } from "./controllers/sample.controllers";
+import { SampleController } from "./controllers/sample/sample.controllers";
 import { Express } from "express";
 import maya from "@mayajs/core";
 
