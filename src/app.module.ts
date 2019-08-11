@@ -1,6 +1,6 @@
+import { SampleController } from "./controllers/sample.controllers";
 import { Express } from "express";
 import maya from "@mayajs/core";
-import { SampleController } from "./controllers/sample.controllers";
 
 class AppModule {
   maya: maya;
