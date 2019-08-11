@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/Mackignacio/maya-sample#readme",
   "dependencies": {
-    "@mayajs/core": "0.0.4",
+    "@mayajs/core": "^0.1.2",
     "mongoose": "^5.6.9",
     "mongoose-paginate": "^5.0.3"
   },
