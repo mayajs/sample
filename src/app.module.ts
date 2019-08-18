@@ -1,13 +1,14 @@
-import { SampleController } from "./controllers/sample/sample.controllers";
 import { App } from "@mayajs/core";
+import { routes } from "./app.routing.module";
 
 @App({
-  routes: [
-    {
-      controllers: [SampleController],
-      middlewares: [],
-      path: "",
-    },
-  ],
+  cors: true, // Default false
+  logs: process.env.NODE_ENV, // Default false
+  mongoConnection: {
+    connectionString: "your-connection-string-here",
+    options: { useCreateIndex: true, useNewUrlParser: true, useFindAndModify: false },
+  },
+  port: Number(process.env.PORT), // Default port:3333
+  routes,
 })
 export class AppModule {}
