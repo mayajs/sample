@@ -1,4 +1,4 @@
-import { SampleController } from "./controllers/sample/sample.controllers";
+import { SampleController } from "./controllers/sample/sample.controller";
 
 export const routes = [
   {

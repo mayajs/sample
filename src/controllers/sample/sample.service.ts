@@ -1,4 +1,5 @@
-import { Injectable, Models } from "@mayajs/core";
+import { Injectable } from "@mayajs/core";
+import { Models } from "@mayajs/mongo";
 
 @Injectable()
 export class SampleServices {
@@ -6,6 +7,7 @@ export class SampleServices {
 
   getSamples() {
     // Your logic here
-    console.log("this is from SampleServices.");
+    console.log(this.model);
+    console.log("This is from SampleServices.");
   }
 }
