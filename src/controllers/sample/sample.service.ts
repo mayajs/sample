@@ -7,6 +7,7 @@ export class SampleServices {
 
   getSamples() {
     // Your logic here
-    console.log("this is from SampleServices.");
+    console.log(this.model);
+    console.log("This is from SampleServices.");
   }
 }
