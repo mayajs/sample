@@ -18,6 +18,7 @@ This repository contains a list of projects using MayaJS. This also helps new us
   - [Angular](https://github.com/mayajs/sample/tree/master/todo/angular)
   - [React](https://github.com/mayajs/sample/tree/master/todo/react)
   - [Vue](https://github.com/mayajs/sample/tree/master/todo/vue)
+  - [Svelte](https://github.com/mayajs/sample/tree/master/todo/svelte)
 
 ## Collaborating
 
