@@ -33,11 +33,12 @@ class App extends Component<{}, { list: ITodo[] }> {
 
   // Delete Todo Item
   deleteItem = (id: string) => {
-    axios.delete(`${APIR_URL}/${id}`).then((res) =>
-      this.setState({
-        list: [...this.state.list.filter((item) => item.id !== id)],
-      })
-    );
+    axios.delete(`${APIR_URL}/${id}`).then((res) => this.setState({ list: [...this.state.list.filter((item) => item.id !== id)] }));
+  };
+
+  // Add Todo Item
+  addItem = (title: string) => {
+    axios.post(APIR_URL, { title, completed: false }).then((res) => this.setState({ list: [...this.state.list, res.data] }));
   };
 
   actions = {
@@ -51,7 +52,7 @@ class App extends Component<{}, { list: ITodo[] }> {
         <div className="container">
           <Header />
           <TodoList list={this.state.list} actions={this.actions} />
-          <TodoAdd />
+          <TodoAdd addItem={this.addItem} />
         </div>
       </div>
     );
