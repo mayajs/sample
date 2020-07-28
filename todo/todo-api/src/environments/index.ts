@@ -3,5 +3,5 @@ config();
 
 export = {
   production: false,
-  MONGO_URL: process.env.MONGO_URL,
+  MONGO_URL: process.env.MONGO_URL || "",
 };
