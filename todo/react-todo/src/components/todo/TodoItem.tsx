@@ -15,7 +15,10 @@ export default class TodoItem extends Component<IPropsTodoItem> {
     const { title, completed } = this.props.todo;
     return (
       <div style={this.setStyle(completed)}>
-        <p>{title}</p>
+        <p>
+          <input type="checkbox" defaultChecked={completed} style={{ marginRight: "1rem" }} />
+          {title}
+        </p>
       </div>
     );
   }
