@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import Header from "./components/utility/Header";
 import TodoList from "./components/todo/TodoList";
 import { ITodo } from "./components/interfaces";
+import axios from "axios";
 import "./App.css";
+
+const APIR_URL = "http://localhost:3333/todos";
 
 class App extends Component<{}, { list: ITodo[] }> {
   state = {
@@ -27,8 +30,18 @@ class App extends Component<{}, { list: ITodo[] }> {
     });
   };
 
+  // Delete Todo Item
+  deleteItem = (id: string) => {
+    axios.delete(`${APIR_URL}/${id}`).then((res) =>
+      this.setState({
+        list: [...this.state.list.filter((item) => item.id !== id)],
+      })
+    );
+  };
+
   actions = {
     toggleComplete: this.toggleComplete,
+    deleteItem: this.deleteItem,
   };
 
   render() {
