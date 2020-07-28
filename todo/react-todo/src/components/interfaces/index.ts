@@ -1,5 +1,6 @@
 interface IActions {
   toggleComplete: (id: string) => void;
+  deleteItem: (id: string) => void;
 }
 
 export interface ITodo {
