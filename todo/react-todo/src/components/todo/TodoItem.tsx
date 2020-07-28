@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, CSSProperties } from "react";
 import { IPropsTodoItem } from "../interfaces";
 
 export default class TodoItem extends Component<IPropsTodoItem> {
@@ -11,6 +11,16 @@ export default class TodoItem extends Component<IPropsTodoItem> {
     };
   };
 
+  btnStyle: CSSProperties = {
+    background: "#ff0000",
+    color: "#fff",
+    border: "none",
+    padding: "5px 9px",
+    borderRadius: "50%",
+    cursor: "pointer",
+    float: "right",
+  };
+
   render() {
     const { id, title, completed } = this.props.todo;
     const { toggleComplete } = this.props.actions;
@@ -19,6 +29,7 @@ export default class TodoItem extends Component<IPropsTodoItem> {
         <p>
           <input type="checkbox" defaultChecked={completed} style={{ marginRight: "1rem" }} onChange={toggleComplete.bind(this, id)} />
           {title}
+          <button style={this.btnStyle}>x</button>
         </p>
       </div>
     );
