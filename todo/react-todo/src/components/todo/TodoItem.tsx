@@ -12,11 +12,12 @@ export default class TodoItem extends Component<IPropsTodoItem> {
   };
 
   render() {
-    const { title, completed } = this.props.todo;
+    const { id, title, completed } = this.props.todo;
+    const { toggleComplete } = this.props.actions;
     return (
       <div style={this.setStyle(completed)}>
         <p>
-          <input type="checkbox" defaultChecked={completed} style={{ marginRight: "1rem" }} />
+          <input type="checkbox" defaultChecked={completed} style={{ marginRight: "1rem" }} onChange={toggleComplete.bind(this, id)} />
           {title}
         </p>
       </div>
