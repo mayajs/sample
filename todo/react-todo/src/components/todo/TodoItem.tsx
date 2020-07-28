@@ -22,14 +22,14 @@ export default class TodoItem extends Component<IPropsTodoItem> {
   };
 
   render() {
-    const { id, title, completed } = this.props.todo;
+    const { _id, title, completed } = this.props.todo;
     const { toggleComplete, deleteItem } = this.props.actions;
     return (
       <div style={this.setStyle(completed)}>
         <p>
-          <input type="checkbox" defaultChecked={completed} style={{ marginRight: "1rem" }} onChange={toggleComplete.bind(this, id)} />
+          <input type="checkbox" defaultChecked={completed} style={{ marginRight: "1rem" }} onChange={toggleComplete.bind(this, _id)} />
           {title}
-          <button style={this.btnStyle} onClick={deleteItem.bind(this, id)}>
+          <button style={this.btnStyle} onClick={deleteItem.bind(this, _id)}>
             x
           </button>
         </p>
