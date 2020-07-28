@@ -7,7 +7,7 @@ const schema = MongoSchema({
   },
   completed: {
     required: [true, "Completed is required!"],
-    type: String,
+    type: Boolean,
   },
 });
 
