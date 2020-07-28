@@ -1,21 +1,36 @@
-# TestApp MayaJS Project
+# Todo Api MayaJS Project
 
 This project was created with [MayaJS CLI](https://github.com/mayajs/cli) version 0.3.7.
 
 ## Getting Started
 
 - Install Nodejs, donwload it [here](https://nodejs.org/dist/v12.18.2/node-v12.18.2-x64.msi).
-> Note: If you already have NodeJS installed skip this step.
 
-- Install MayajJS using this command
-  - `npm i @mayajs/cli -g` or for linux/mac users `sudo npm i @mayajs/cli -g`
-> Note: If you already have MayajJS installed skip this step.
+  > **Note:** If you already have installed NodeJS skip this step.
+
+- Install Mayajs globally using this command
+
+  > **Note:** If you already have installed Mayajs skip this step.
+
+  - windows user `npm i @mayajs/cli -g`
+  - linux/mac users `sudo npm i @mayajs/cli -g`
 
 - Navigate to your project folder
 
-> If you are cloning this project for the first time you need to install all the dependencies first before running this project otherwise skip this.
-- Install dependencies using this command
+* Install dependencies using this command
+  > **Note:** If you are cloning this project for the first time you need to install all the dependencies first before running this project otherwise skip this.
   - `npm i`
+
+## Endpoints
+
+| Method | Endpoint     |
+| ------ | ------------ |
+| GET    | `/todos`     |
+| GET    | `/todos/:id` |
+| POST   | `/todos`     |
+| PUT    | `/todos/:id` |
+| PATCH  | `/todos/:id` |
+| DELETE | `/todos/:id` |
 
 ## Development Server
 
