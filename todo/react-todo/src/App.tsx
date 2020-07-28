@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "./components/utility/Header";
 import TodoList from "./components/todo/TodoList";
+import TodoAdd from "./components/todo/TodoAdd";
 import { ITodo } from "./components/interfaces";
 import axios from "axios";
 import "./App.css";
@@ -50,6 +51,7 @@ class App extends Component<{}, { list: ITodo[] }> {
         <div className="container">
           <Header />
           <TodoList list={this.state.list} actions={this.actions} />
+          <TodoAdd />
         </div>
       </div>
     );
