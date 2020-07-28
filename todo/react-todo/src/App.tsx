@@ -23,12 +23,7 @@ class App extends Component<{}, { list: ITodo[] }> {
   toggleComplete = (id: string) => this.setState({ list: this.state.list.map(this.mapItem(id)) });
 
   // Map List Items
-  mapItem = (id: string) => (item: ITodo) => {
-    if (item.id === id) {
-      item.completed = !item.completed;
-    }
-    return item;
-  };
+  mapItem = (id: string) => (item: ITodo) => ({ ...item, completed: item.id === id ? !item.completed : item.completed });
 
   // Delete Todo Item
   deleteItem = (id: string) => {
