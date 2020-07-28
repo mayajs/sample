@@ -4,9 +4,13 @@ interface IActions {
 }
 
 export interface ITodo {
-  id: string;
+  _id: string;
   title: string;
   completed: boolean;
+}
+
+export interface IPropsApp {
+  list: ITodo[];
 }
 
 export interface IPropsTodoItem {
