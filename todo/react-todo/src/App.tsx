@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import Header from "./components/utility/Header";
 import TodoList from "./components/todo/TodoList";
+import { ITodo } from "./components/interfaces";
 import "./App.css";
 
-class App extends Component {
+class App extends Component<{}, { list: ITodo[] }> {
   state = {
-    list: [],
+    list: [
+      {
+        id: "1",
+        title: "test",
+        completed: false,
+      },
+    ],
   };
 
   render() {
