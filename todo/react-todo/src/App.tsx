@@ -15,12 +15,28 @@ class App extends Component<{}, { list: ITodo[] }> {
     ],
   };
 
+  // Toggle Complete
+  toggleComplete = (id: string) => {
+    this.setState({
+      list: this.state.list.map((item) => {
+        if (item.id === id) {
+          item.completed = !item.completed;
+        }
+        return item;
+      }),
+    });
+  };
+
+  actions = {
+    toggleComplete: this.toggleComplete,
+  };
+
   render() {
     return (
       <div className="App">
         <div className="container">
           <Header />
-          <TodoList list={this.state.list} />
+          <TodoList list={this.state.list} actions={this.actions} />
         </div>
       </div>
     );
