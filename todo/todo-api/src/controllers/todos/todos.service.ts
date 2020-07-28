@@ -7,25 +7,25 @@ export class TodosServices {
 
   constructor() {}
 
-  async addUser(body: any) {
+  async addTodo(body: any) {
     const user = new this.model(body);
     await user.save();
     return user.toObject();
   }
 
-  async allUser() {
+  async allTodos() {
     return await this.model.find();
   }
 
-  async userbyId(_id: string) {
+  async todobyId(_id: string) {
     return await this.model.find({ _id });
   }
 
-  async updateUser(_id: string, body: any) {
+  async updateTodo(_id: string, body: any) {
     return await this.model.findOneAndUpdate({ _id }, body, { new: true });
   }
 
-  async deleteUser(_id: string) {
+  async deleteTodo(_id: string) {
     return await this.model.findOneAndDelete({ _id });
   }
 }

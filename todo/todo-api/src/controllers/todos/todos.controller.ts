@@ -11,30 +11,30 @@ export class TodosController {
   constructor(private services: TodosServices) {}
 
   @Post({ path: "/" })
-  async addbyId(req: Request, res: Response, next: NextFunction): Promise<void> {
-    res.json(await this.services.addUser(req.body));
+  async addTodo(req: Request, res: Response, next: NextFunction): Promise<void> {
+    res.json(await this.services.addTodo(req.body));
   }
 
   @Get({ path: "/" })
-  async getAllUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
-    res.json(await this.services.allUser());
+  async getAllTodos(req: Request, res: Response, next: NextFunction): Promise<void> {
+    res.json(await this.services.allTodos());
   }
 
   @Get({ path: "/:id" })
-  async getUserbyId(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getTodosbyId(req: Request, res: Response, next: NextFunction): Promise<void> {
     const id = req.params.id;
-    res.json(await this.services.userbyId(id));
+    res.json(await this.services.todobyId(id));
   }
 
   @Patch({ path: "/:id" })
-  async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async updateTodo(req: Request, res: Response, next: NextFunction): Promise<void> {
     const id = req.params.id;
-    res.json(await this.services.updateUser(id, req.body));
+    res.json(await this.services.updateTodo(id, req.body));
   }
 
   @Delete({ path: "/:id" })
-  async deleteUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async deleteTodo(req: Request, res: Response, next: NextFunction): Promise<void> {
     const id = req.params.id;
-    res.json(await this.services.deleteUser(id));
+    res.json(await this.services.deleteTodo(id));
   }
 }
