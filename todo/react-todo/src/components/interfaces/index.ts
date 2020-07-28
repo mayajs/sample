@@ -18,3 +18,7 @@ export interface IPropsTodoList {
   list: ITodo[];
   actions: IActions;
 }
+
+export interface IPropsTodoAdd {
+  addItem: (title: string) => void;
+}
