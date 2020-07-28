@@ -66,40 +66,40 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _showAddTodoDialog() async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Add TODO'),
-        content: SingleChildScrollView(
-          child: TextField(
-            controller: todoController,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: 'Enter TODO'
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add TODO'),
+          content: SingleChildScrollView(
+            child: TextField(
+              controller: todoController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Enter TODO'
+              ),
             ),
           ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          FlatButton(
-            child: Text('Submit'),
-            onPressed: () => {
-              setState(() {
-                todos.insert(0, todoController.text);
-              }),
-              Navigator.of(context).pop(),
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Submit'),
+              onPressed: () => {
+                setState(() {
+                  todos.insert(0, todoController.text);
+                }),
+                Navigator.of(context).pop(),
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
