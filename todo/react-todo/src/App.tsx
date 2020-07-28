@@ -1,15 +1,23 @@
-import React from "react";
+import React, { Component } from "react";
 import Header from "./components/utility/Header";
+import TodoList from "./components/todo/TodoList";
 import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <div className="container">
-        <Header />
+class App extends Component {
+  state = {
+    list: [],
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <div className="container">
+          <Header />
+          <TodoList list={this.state.list} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
