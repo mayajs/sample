@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
-export default class TodoList extends Component {
+interface IPropsTodoList {
+  list: any[];
+}
+
+export default class TodoList extends Component<IPropsTodoList> {
   render() {
     return <div></div>;
   }
