@@ -1,13 +1,6 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 
-interface ICssStyles {
-  background: string;
-  color: string;
-  textAlign: "center";
-  padding: string;
-}
-
-const styles: ICssStyles = {
+const styles: CSSProperties = {
   background: "#333",
   color: "#fff",
   textAlign: "center",
