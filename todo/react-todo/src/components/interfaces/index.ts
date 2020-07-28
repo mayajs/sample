@@ -1,3 +1,7 @@
+interface IActions {
+  toggleComplete: (id: string) => void;
+}
+
 export interface ITodo {
   id: string;
   title: string;
@@ -6,8 +10,10 @@ export interface ITodo {
 
 export interface IPropsTodoItem {
   todo: ITodo;
+  actions: IActions;
 }
 
 export interface IPropsTodoList {
   list: ITodo[];
+  actions: IActions;
 }
