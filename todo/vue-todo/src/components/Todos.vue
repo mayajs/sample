@@ -1,6 +1,11 @@
 <template>
   <div>
-    {{ info }}
+    {{ msg }}
+    <ul>
+      <li v-for="todo in todos" :key="todo._id">
+        {{ todo.title }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -17,11 +22,11 @@ export interface ITodo {
 @Component({})
 export default class Todos extends Vue {
   @Prop() private msg!: string;
-  private info!: ITodo[];
+  private todos!: ITodo;
 
   data() {
     return {
-      info: null,
+      todos: [],
     };
   }
 
@@ -33,14 +38,14 @@ export default class Todos extends Vue {
   get() {
     axios
       .get("http://localhost:3333/todos")
-      .then((response) => (this.info = response.data))
+      .then((response) => (this.todos = response.data))
       .catch((error) => console.log(error));
   }
 
   post() {
     axios
       .post<ITodo>("http://localhost:3333/todos", {})
-      .then((response) => (this.info = [...this.info, response.data]))
+      .then((response) => (this.todos = response.data))
       .catch((error) => console.log(error));
   }
 }
