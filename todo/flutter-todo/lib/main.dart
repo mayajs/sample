@@ -59,7 +59,19 @@ class _MyHomePageState extends State<MyHomePage> {
       itemBuilder: (BuildContext context, int index) {
         return Container(
           height: 50,
-          child: Text(todos[index]),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(todos[index]),
+              GestureDetector(
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+                onTap: () {},
+              ),
+            ],
+          ),
         );
       },
     );
