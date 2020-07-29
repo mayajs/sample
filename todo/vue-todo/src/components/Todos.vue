@@ -27,12 +27,20 @@ export default class Todos extends Vue {
 
   mounted() {
     this.get();
+    this.post();
   }
 
   get() {
     axios
       .get("http://localhost:3333/todos")
       .then((response) => (this.info = response.data))
+      .catch((error) => console.log(error));
+  }
+
+  post() {
+    axios
+      .post<ITodo>("http://localhost:3333/todos", {})
+      .then((response) => (this.info = [...this.info, response.data]))
       .catch((error) => console.log(error));
   }
 }
