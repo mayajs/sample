@@ -8,16 +8,28 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 
+export interface ITodo {
+  _id: string;
+  title: string;
+  completed: boolean;
+}
+
 @Component({})
 export default class Todos extends Vue {
   @Prop() private msg!: string;
-  private info!: any;
+  private info!: ITodo[];
+
   data() {
     return {
       info: null,
     };
   }
+
   mounted() {
+    this.get();
+  }
+
+  get() {
     axios
       .get("http://localhost:3333/todos")
       .then((response) => (this.info = response.data))
