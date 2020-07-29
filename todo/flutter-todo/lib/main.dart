@@ -78,7 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       Icons.edit,
                       color: Colors.green,
                     ),
-                    onTap: () => {},
+                    onTap: () => {
+                      todoController.clear(),
+                      _showEditTodoDialog(todos[index])},
                   ),
                   GestureDetector(
                     child: Icon(
@@ -130,6 +132,46 @@ class _MyHomePageState extends State<MyHomePage> {
                   todoService
                       .post(TodoModel(
                           title: todoController.text, completed: false))
+                      .then((String message) => print(message));
+                }),
+                Navigator.of(context).pop(),
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showEditTodoDialog(TodoModel todo) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit ${todo.title}'),
+          content: SingleChildScrollView(
+            child: TextField(
+              controller: todoController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Enter TODO',
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Submit'),
+              onPressed: () => {
+                setState(() {
+                  todoService
+                      .patch(TodoModel(id: todo.id, title: todoController.text, completed: false))
                       .then((String message) => print(message));
                 }),
                 Navigator.of(context).pop(),
