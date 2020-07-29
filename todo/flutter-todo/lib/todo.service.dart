@@ -34,10 +34,15 @@ class TodoService {
     }
   }
 
-  patch(String url, String id,
-      {Map<String, String> headers, Map<String, dynamic> data}) async {
-    return await http.patch(url + id,
-        headers: headers, body: convert.jsonEncode(data));
+  Future<String> patch(TodoModel todo) async {
+    http.Response res = await http.patch('$url/${todo.id}',
+        headers: headers, body: convert.jsonEncode(todo));
+
+    if (res.statusCode == 200) {
+      return "${todo.title} is successfully updated.";
+    } else {
+      return "Can't update ${todo.title}!";
+    }
   }
 
   Future<String> delete(TodoModel todo) async {
