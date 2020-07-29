@@ -12,7 +12,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 mx-auto mt-5 mb-2">
-          <ul class="list-group">
+          <h1 class="text-center" v-if="errorMessage">{{ errorMessage }}</h1>
+          <ul class="list-group" v-if="!errorMessage">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
               {{ todo.title }}
               <div>
@@ -65,6 +66,7 @@ export default class Todos extends Vue {
   private completed!: boolean;
   private todos!: ITodo[];
   private url = env.API_URL;
+  private errorMessage!: string;
 
   data() {
     return {
@@ -72,6 +74,7 @@ export default class Todos extends Vue {
       id: "",
       title: "",
       completed: false,
+      errorMessage: "",
     };
   }
 
@@ -83,7 +86,7 @@ export default class Todos extends Vue {
     axios
       .get<ITodo[]>(`${this.url}todos`)
       .then(({ data }) => (this.todos = data))
-      .catch((error) => console.log(error));
+      .catch((error) => (this.errorMessage = error));
   }
 
   postTodo() {
@@ -93,7 +96,7 @@ export default class Todos extends Vue {
         this.title = "";
         this.getTodos();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => (this.errorMessage = error));
   }
 
   patchTodo() {
@@ -104,14 +107,14 @@ export default class Todos extends Vue {
         this.title = "";
         this.getTodos();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => (this.errorMessage = error));
   }
 
   deleteTodo(id: string) {
     axios
       .delete(`${this.url}todos/${id}`)
       .then(() => this.getTodos())
-      .catch((error) => console.log(error));
+      .catch((error) => (this.errorMessage = error));
   }
 
   editTodo(id: string, title: string) {
