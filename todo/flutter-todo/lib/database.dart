@@ -16,4 +16,8 @@ class Database {
   post(String url, String id, {Map<String, String> headers, Map<String, dynamic> data}) async {
     return await http.post(url, headers: headers, body: convert.jsonEncode(data));
   }
+
+  patch(String url, String id, {Map<String, String> headers, Map<String, dynamic> data}) async {
+    return await http.patch(url + id, headers: headers, body: convert.jsonEncode(data));
+  }
 }
