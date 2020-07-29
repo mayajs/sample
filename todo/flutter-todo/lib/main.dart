@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 onTap: () => {
                   setState(() {
-                    todos.remove(todos[index]);
+                    todoService.delete(todos[index]).then((String message) =>  print(message));
                   }),
                 },
               ),
