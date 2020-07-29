@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/todo.service.dart';
+import 'package:flutter_todo/todo.model.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<String> todos = <String>[];
+  final TodoService todoService = TodoService();
   final todoController = TextEditingController();
 
   @override
@@ -36,10 +38,16 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(child: _todoBuilder()),
-        ],
+      body: FutureBuilder(
+        future: todoService.getAll(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<TodoModel>> snapshot) {
+          if (snapshot.hasData) {
+            return _todoBuilder(todos: snapshot.data);
+          }
+
+          return Center(child: CircularProgressIndicator());
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
@@ -52,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _todoBuilder() {
+  Widget _todoBuilder({List<TodoModel> todos}) {
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       itemCount: todos.length,
@@ -62,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(todos[index]),
+              Text(todos[index].title),
               GestureDetector(
                 child: Icon(
                   Icons.delete,
@@ -92,9 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: TextField(
               controller: todoController,
               decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Enter TODO'
-              ),
+                  border: InputBorder.none, hintText: 'Enter TODO'),
             ),
           ),
           actions: <Widget>[
@@ -108,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Submit'),
               onPressed: () => {
                 setState(() {
-                  todos.insert(0, todoController.text);
+                  /* todos.insert(0, todoController.text); */
                 }),
                 Navigator.of(context).pop(),
               },
