@@ -2,11 +2,9 @@
   <div>
     {{ msg }}
     <ul>
-      <li v-for="todo in todos" :key="todo._id">
-        {{ todo.title }}
-      </li>
+      <li v-for="todo in todos" :key="todo._id">{{ todo.title }} <span>edit</span> <button v-on:click="deleteTodo(todo._id)">remove</button></li>
     </ul>
-    <form method="post" @submit.prevent="post">
+    <form method="post" @submit.prevent="postTodo">
       <input v-model="title" placeholder="title" />
       <button>Submit</button>
     </form>
@@ -30,6 +28,7 @@ export default class Todos extends Vue {
   private title!: string;
   private completed!: string;
   private todos!: ITodo[];
+  private url = "http://localhost:3333/todos";
 
   data() {
     return {
@@ -40,24 +39,31 @@ export default class Todos extends Vue {
   }
 
   mounted() {
-    this.get();
-    this.post();
+    this.getTodos();
+    this.postTodo();
   }
 
-  get() {
+  getTodos() {
     axios
-      .get("http://localhost:3333/todos")
-      .then((response) => (this.todos = response.data))
+      .get(this.url)
+      .then(({ data }) => (this.todos = data))
       .catch((error) => console.log(error));
   }
 
-  post() {
+  postTodo() {
     axios
-      .post<ITodo>("http://localhost:3333/todos", { title: this.title, completed: this.completed })
-      .then((response) => {
+      .post<ITodo>(this.url, { title: this.title, completed: this.completed })
+      .then(() => {
         this.title = "";
-        this.todos = [...this.todos, response.data];
+        this.getTodos();
       })
+      .catch((error) => console.log(error));
+  }
+
+  deleteTodo(id: string) {
+    axios
+      .delete(`${this.url}/${id}`)
+      .then(() => this.getTodos())
       .catch((error) => console.log(error));
   }
 }
