@@ -1,7 +1,7 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
-class Database {
+class DatabaseService {
   final String url = 'http://10.0.2.2:3333/todos';
   final Map<String, String> headers = {'Content-type': 'application/json'};
 
