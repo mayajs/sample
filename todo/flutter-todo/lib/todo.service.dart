@@ -23,10 +23,15 @@ class TodoService {
     return await http.get(url + id, headers: headers);
   }
 
-  post(String url, String id,
-      {Map<String, String> headers, Map<String, dynamic> data}) async {
-    return await http.post(url,
-        headers: headers, body: convert.jsonEncode(data));
+  Future<String> post(TodoModel todo) async {
+    http.Response res =
+        await http.post(url, headers: headers, body: convert.jsonEncode(todo));
+
+    if (res.statusCode == 200) {
+      return "${todo.title} is successfully added.";
+    } else {
+      return "Can't add ${todo.title}!";
+    }
   }
 
   patch(String url, String id,
@@ -41,7 +46,7 @@ class TodoService {
     if (res.statusCode == 200) {
       return "${todo.title} is successfully deleted.";
     } else {
-      return "Can't delete TODOS!";
+      return "Can't delete ${todo.title}!";
     }
   }
 }
