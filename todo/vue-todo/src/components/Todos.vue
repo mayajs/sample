@@ -54,7 +54,10 @@ export default class Todos extends Vue {
   post() {
     axios
       .post<ITodo>("http://localhost:3333/todos", { title: this.title, completed: this.completed })
-      .then((response) => (this.todos = [...this.todos, response.data]))
+      .then((response) => {
+        this.title = "";
+        this.todos = [...this.todos, response.data];
+      })
       .catch((error) => console.log(error));
   }
 }
