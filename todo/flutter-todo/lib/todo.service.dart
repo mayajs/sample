@@ -11,10 +11,8 @@ class TodoService {
 
     if (res.statusCode == 200) {
       List<dynamic> body = convert.jsonDecode(res.body);
-
       List<TodoModel> todos =
           body.map((dynamic item) => TodoModel.fromJson(item)).toList();
-
       return todos;
     } else {
       throw "TODOS not found!";
@@ -37,7 +35,13 @@ class TodoService {
         headers: headers, body: convert.jsonEncode(data));
   }
 
-  delete(String url, String id, {Map<String, String> headers}) async {
-    return await http.delete(url + id, headers: headers);
+  Future<String> delete(TodoModel todo) async {
+    http.Response res = await http.delete('$url/${todo.id}', headers: headers);
+
+    if (res.statusCode == 200) {
+      return "${todo.title} is successfully deleted.";
+    } else {
+      return "Can't delete TODOS!";
+    }
   }
 }
