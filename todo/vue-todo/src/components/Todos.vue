@@ -16,7 +16,8 @@
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
               <div>
                 <input class="form-check-input mr-1" type="checkbox" />
-                {{ todo.title }}
+                {{ !todo.completed ? todo.title : "" }}
+                <del v-if="todo.completed">{{ todo.title }}</del>
               </div>
               <div>
                 <button class="btn btn-info btn-sm mx-1" v-on:click="editTodo(todo._id, todo.title)"><i class="fas fa-edit"></i></button>
