@@ -1,3 +1,4 @@
+import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 class Database {
@@ -10,5 +11,9 @@ class Database {
 
   getById(String url, String id, {Map<String, String> headers}) async {
     return await http.get(url + id, headers: headers);
+  }
+
+  post(String url, String id, {Map<String, String> headers, Map<String, dynamic> data}) async {
+    return await http.post(url, headers: headers, body: convert.jsonEncode(data));
   }
 }
