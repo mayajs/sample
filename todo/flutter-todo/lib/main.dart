@@ -38,69 +38,88 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: FutureBuilder(
-        future: todoService.getAll(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<TodoModel>> snapshot) {
-          if (snapshot.hasData) {
-            return _todoBuilder(todos: snapshot.data);
-          }
+      body: _futureBuilder(),
+      floatingActionButton: _floatingActionButton(),
+    );
+  }
 
-          return Center(child: CircularProgressIndicator());
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          todoController.clear(),
-          _showAddTodoDialog(),
-        },
-        tooltip: 'Add TODO',
-        child: Icon(Icons.add),
-      ),
+  Widget _futureBuilder() {
+    return FutureBuilder(
+      future: todoService.getAll(),
+      builder: (BuildContext context, AsyncSnapshot<List<TodoModel>> snapshot) {
+        if (snapshot.hasData) {
+          return _todoBuilder(todos: snapshot.data);
+        }
+
+        return Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  Widget _floatingActionButton() {
+    return FloatingActionButton(
+      onPressed: () => {
+        todoController.clear(),
+        _showAddTodoDialog(),
+      },
+      tooltip: 'Add TODO',
+      child: Icon(Icons.add),
     );
   }
 
   Widget _todoBuilder({List<TodoModel> todos}) {
     return ListView.builder(
-      padding: const EdgeInsets.all(8),
+      padding: EdgeInsets.all(10),
       itemCount: todos.length,
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-          height: 50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(todos[index].title),
-              Row(
-                children: <Widget>[
-                  GestureDetector(
-                    child: Icon(
-                      Icons.edit,
-                      color: Colors.green,
-                    ),
-                    onTap: () => {
-                      todoController.clear(),
-                      _showEditTodoDialog(todos[index])},
-                  ),
-                  GestureDetector(
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onTap: () => {
-                      setState(() {
-                        todoService
-                            .delete(todos[index])
-                            .then((String message) => print(message));
-                      }),
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
+        return _todoContent(todos, index);
       },
+    );
+  }
+
+  Widget _todoContent(List<TodoModel> todos, int index) {
+    return Container(
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(todos[index].title),
+          Row(
+            children: _actionButtons(todos, index),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _actionButtons(List<TodoModel> todos, int index) {
+    return <Widget>[
+      _buttonBuilder(
+          icon: Icons.edit,
+          color: Colors.green,
+          onTap: () =>
+              {todoController.clear(), _showEditTodoDialog(todos[index])}),
+      _buttonBuilder(
+        icon: Icons.delete,
+        color: Colors.red,
+        onTap: () => {
+          setState(() {
+            todoService
+                .delete(todos[index])
+                .then((String message) => print(message));
+          }),
+        },
+      )
+    ];
+  }
+
+  Widget _buttonBuilder({IconData icon, Color color, void Function() onTap}) {
+    return GestureDetector(
+      child: Icon(
+        icon,
+        color: color,
+      ),
+      onTap: onTap,
     );
   }
 
@@ -111,32 +130,18 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Add TODO'),
-          content: SingleChildScrollView(
-            child: TextField(
-              controller: todoController,
-              decoration: InputDecoration(
-                  border: InputBorder.none, hintText: 'Enter TODO'),
-            ),
-          ),
+          content: _dialogContent(),
           actions: <Widget>[
-            FlatButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('Submit'),
-              onPressed: () => {
-                setState(() {
-                  todoService
-                      .post(TodoModel(
-                          title: todoController.text, completed: false))
-                      .then((String message) => print(message));
+            _cancelButton(),
+            _submitButtonBuilder(() => {
+                  setState(() {
+                    todoService
+                        .post(TodoModel(
+                            title: todoController.text, completed: false))
+                        .then((String message) => print(message));
+                  }),
+                  Navigator.of(context).pop(),
                 }),
-                Navigator.of(context).pop(),
-              },
-            ),
           ],
         );
       },
@@ -150,28 +155,17 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Edit ${todo.title}'),
-          content: SingleChildScrollView(
-            child: TextField(
-              controller: todoController,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Enter TODO',
-              ),
-            ),
-          ),
+          content: _dialogContent(),
           actions: <Widget>[
-            FlatButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('Submit'),
-              onPressed: () => {
+            _cancelButton(),
+            _submitButtonBuilder(
+              () => {
                 setState(() {
                   todoService
-                      .patch(TodoModel(id: todo.id, title: todoController.text, completed: false))
+                      .patch(TodoModel(
+                          id: todo.id,
+                          title: todoController.text,
+                          completed: false))
                       .then((String message) => print(message));
                 }),
                 Navigator.of(context).pop(),
@@ -180,6 +174,34 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         );
       },
+    );
+  }
+
+  Widget _dialogContent() {
+    return SingleChildScrollView(
+      child: TextField(
+        controller: todoController,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Enter TODO',
+        ),
+      ),
+    );
+  }
+
+  Widget _cancelButton() {
+    return FlatButton(
+      child: Text('Cancel'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
+  Widget _submitButtonBuilder(void Function() onPressed) {
+    return FlatButton(
+      child: Text('Submit'),
+      onPressed: onPressed,
     );
   }
 }
