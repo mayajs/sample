@@ -71,18 +71,29 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(todos[index].title),
-              GestureDetector(
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                ),
-                onTap: () => {
-                  setState(() {
-                    todoService
-                        .delete(todos[index])
-                        .then((String message) => print(message));
-                  }),
-                },
+              Row(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Icon(
+                      Icons.edit,
+                      color: Colors.green,
+                    ),
+                    onTap: () => {},
+                  ),
+                  GestureDetector(
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onTap: () => {
+                      setState(() {
+                        todoService
+                            .delete(todos[index])
+                            .then((String message) => print(message));
+                      }),
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -117,8 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => {
                 setState(() {
                   todoService
-                    .post(TodoModel(title: todoController.text, completed: false))
-                    .then((String message) => print(message));
+                      .post(TodoModel(
+                          title: todoController.text, completed: false))
+                      .then((String message) => print(message));
                 }),
                 Navigator.of(context).pop(),
               },
