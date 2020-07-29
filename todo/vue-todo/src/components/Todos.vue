@@ -14,11 +14,7 @@
         <div class="col-md-6 mx-auto mt-5 mb-2">
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
-              <div>
-                <input class="form-check-input mr-1" type="checkbox" />
-                {{ !todo.completed ? todo.title : "" }}
-                <del v-if="todo.completed">{{ todo.title }}</del>
-              </div>
+              {{ todo.title }}
               <div>
                 <button class="btn btn-info btn-sm mx-1" v-on:click="editTodo(todo._id, todo.title)"><i class="fas fa-edit"></i></button>
                 <button class="btn btn-danger btn-sm mx-1" v-on:click="deleteTodo(todo._id)"><i class="fas fa-trash"></i></button>
@@ -53,9 +49,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
+import { environment as env } from "../environments/index";
 
-export interface ITodo {
-  _id: string;
+interface ITodo {
+  _id?: string;
   title: string;
   completed: boolean;
 }
@@ -67,7 +64,7 @@ export default class Todos extends Vue {
   private title!: string;
   private completed!: boolean;
   private todos!: ITodo[];
-  private url = "http://localhost:3333/todos";
+  private url = env.API_URL;
 
   data() {
     return {
@@ -84,14 +81,14 @@ export default class Todos extends Vue {
 
   getTodos() {
     axios
-      .get<ITodo[]>(this.url)
+      .get<ITodo[]>(`${this.url}todos`)
       .then(({ data }) => (this.todos = data))
       .catch((error) => console.log(error));
   }
 
   postTodo() {
     axios
-      .post<ITodo>(this.url, { title: this.title, completed: this.completed })
+      .post<ITodo>(`${this.url}todos`, { title: this.title, completed: this.completed })
       .then(() => {
         this.title = "";
         this.getTodos();
@@ -101,7 +98,7 @@ export default class Todos extends Vue {
 
   patchTodo() {
     axios
-      .patch<ITodo>(`${this.url}/${this.id}`, { title: this.title, completed: this.completed })
+      .patch<ITodo>(`${this.url}todos/${this.id}`, { title: this.title, completed: this.completed })
       .then(() => {
         this.id = "";
         this.title = "";
@@ -110,16 +107,16 @@ export default class Todos extends Vue {
       .catch((error) => console.log(error));
   }
 
+  deleteTodo(id: string) {
+    axios
+      .delete(`${this.url}todos/${id}`)
+      .then(() => this.getTodos())
+      .catch((error) => console.log(error));
+  }
+
   editTodo(id: string, title: string) {
     this.id = id;
     this.title = title;
-  }
-
-  deleteTodo(id: string) {
-    axios
-      .delete(`${this.url}/${id}`)
-      .then(() => this.getTodos())
-      .catch((error) => console.log(error));
   }
 }
 </script>
