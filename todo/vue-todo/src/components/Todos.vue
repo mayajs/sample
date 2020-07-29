@@ -9,11 +9,18 @@
       </div>
     </nav>
 
-    <ul>
-      <li v-for="todo in todos" :key="todo._id">
-        {{ todo.title }} <button v-on:click="editTodo(todo._id, todo.title)">edit</button> <button v-on:click="deleteTodo(todo._id)">remove</button>
-      </li>
-    </ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mx-auto my-5">
+          <ul>
+            <li v-for="todo in todos" :key="todo._id">
+              {{ todo.title }} <button class="btn btn-warning" v-on:click="editTodo(todo._id, todo.title)"><i class="fas fa-edit"></i></button>
+              <button class="btn btn-danger" v-on:click="deleteTodo(todo._id)"><i class="fas fa-trash"></i></button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <form @submit.prevent="postTodo" v-if="!this.id">
       <input v-model="title" placeholder="title" />
