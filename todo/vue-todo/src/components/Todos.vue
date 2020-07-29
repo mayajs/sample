@@ -6,6 +6,11 @@
         {{ todo.title }}
       </li>
     </ul>
+    <form method="post" @submit.prevent="post">
+      <input v-model="title" placeholder="title" />
+      <button>Submit</button>
+    </form>
+    <p>Title is: {{ title }}</p>
   </div>
 </template>
 
@@ -22,11 +27,15 @@ export interface ITodo {
 @Component({})
 export default class Todos extends Vue {
   @Prop() private msg!: string;
-  private todos!: ITodo;
+  private title!: string;
+  private completed!: string;
+  private todos!: ITodo[];
 
   data() {
     return {
-      todos: [],
+      todos: null,
+      title: "",
+      completed: false,
     };
   }
 
@@ -44,8 +53,8 @@ export default class Todos extends Vue {
 
   post() {
     axios
-      .post<ITodo>("http://localhost:3333/todos", {})
-      .then((response) => (this.todos = response.data))
+      .post<ITodo>("http://localhost:3333/todos", { title: this.title, completed: this.completed })
+      .then((response) => (this.todos = [...this.todos, response.data]))
       .catch((error) => console.log(error));
   }
 }
