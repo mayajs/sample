@@ -1,6 +1,14 @@
 <template>
   <div>
-    {{ msg }}
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="../assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy" />
+          {{ msg }}
+        </a>
+      </div>
+    </nav>
+
     <ul>
       <li v-for="todo in todos" :key="todo._id">
         {{ todo.title }} <button v-on:click="editTodo(todo._id, todo.title)">edit</button> <button v-on:click="deleteTodo(todo._id)">remove</button>
