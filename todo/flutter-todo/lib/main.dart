@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/todo.service.dart';
 import 'package:flutter_todo/todo.model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(MyApp());
@@ -106,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           setState(() {
             todoService
                 .delete(todos[index])
-                .then((String message) => print(message));
+                .then((String message) => _toastBuilder(message));
           }),
         },
       )
@@ -138,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     todoService
                         .post(TodoModel(
                             title: todoController.text, completed: false))
-                        .then((String message) => print(message));
+                        .then((String message) => _toastBuilder(message));
                   }),
                   Navigator.of(context).pop(),
                 }),
@@ -166,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           id: todo.id,
                           title: todoController.text,
                           completed: false))
-                      .then((String message) => print(message));
+                      .then((String message) => _toastBuilder(message));
                 }),
                 Navigator.of(context).pop(),
               },
@@ -202,6 +203,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return FlatButton(
       child: Text('Submit'),
       onPressed: onPressed,
+    );
+  }
+
+  Future<bool>  _toastBuilder(String message) {
+    return Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.grey,
+      textColor: Colors.white,
+      fontSize: 16.0,
     );
   }
 }
