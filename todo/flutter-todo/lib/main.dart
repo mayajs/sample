@@ -78,7 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 onTap: () => {
                   setState(() {
-                    todoService.delete(todos[index]).then((String message) =>  print(message));
+                    todoService
+                        .delete(todos[index])
+                        .then((String message) => print(message));
                   }),
                 },
               ),
@@ -92,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _showAddTodoDialog() async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Add TODO'),
@@ -114,7 +116,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Submit'),
               onPressed: () => {
                 setState(() {
-                  /* todos.insert(0, todoController.text); */
+                  todoService
+                    .post(TodoModel(title: todoController.text, completed: false))
+                    .then((String message) => print(message));
                 }),
                 Navigator.of(context).pop(),
               },
