@@ -1,8 +1,18 @@
-# flutter_todo
+# Flutter / Mayajs Todo App
 
 A new Flutter project.
 
+## Installation
+
+- [Windows](https://flutter.dev/docs/get-started/install/windows) installation guide
+- [MacOS](https://flutter.dev/docs/get-started/install/macos) installation guide
+- [Linux](https://flutter.dev/docs/get-started/install/linux) installation guide
+
 ## Getting Started
+
+### `flutter pub get`
+
+> Run this command to install all the dependencies for this flutter app.
 
 This project is a starting point for a Flutter application.
 
