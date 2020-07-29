@@ -11,11 +11,17 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-4 mx-auto my-5">
-          <ul>
-            <li v-for="todo in todos" :key="todo._id">
-              {{ todo.title }} <button class="btn btn-warning" v-on:click="editTodo(todo._id, todo.title)"><i class="fas fa-edit"></i></button>
-              <button class="btn btn-danger" v-on:click="deleteTodo(todo._id)"><i class="fas fa-trash"></i></button>
+        <div class="col-md-6 mx-auto my-5">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
+              <div>
+                <input class="form-check-input mr-1" type="checkbox" />
+                {{ todo.title }}
+              </div>
+              <div>
+                <button class="btn btn-warning btn-sm mx-1" v-on:click="editTodo(todo._id, todo.title)"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger btn-sm mx-1" v-on:click="deleteTodo(todo._id)"><i class="fas fa-trash"></i></button>
+              </div>
             </li>
           </ul>
         </div>
