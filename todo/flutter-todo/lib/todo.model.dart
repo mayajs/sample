@@ -6,7 +6,7 @@ class TodoModel {
   final bool completed;
 
   TodoModel({
-    @required this.id,
+    this.id,
     @required this.title,
     @required this.completed,
   });
@@ -18,4 +18,6 @@ class TodoModel {
       completed: json['completed'] as bool,
     );
   }
+
+  Map<String, dynamic> toJson() => { 'title': title, 'completed': completed };
 }
