@@ -26,7 +26,7 @@ export interface ITodo {
 export default class Todos extends Vue {
   @Prop() private msg!: string;
   private title!: string;
-  private completed!: string;
+  private completed!: boolean;
   private todos!: ITodo[];
   private url = "http://localhost:3333/todos";
 
@@ -40,12 +40,11 @@ export default class Todos extends Vue {
 
   mounted() {
     this.getTodos();
-    this.postTodo();
   }
 
   getTodos() {
     axios
-      .get(this.url)
+      .get<ITodo[]>(this.url)
       .then(({ data }) => (this.todos = data))
       .catch((error) => console.log(error));
   }
@@ -53,6 +52,16 @@ export default class Todos extends Vue {
   postTodo() {
     axios
       .post<ITodo>(this.url, { title: this.title, completed: this.completed })
+      .then(() => {
+        this.title = "";
+        this.getTodos();
+      })
+      .catch((error) => console.log(error));
+  }
+
+  patchTodo(id: string) {
+    axios
+      .patch<ITodo>(`${this.url}/${id}`, { title: this.title, completed: this.completed })
       .then(() => {
         this.title = "";
         this.getTodos();
