@@ -7,4 +7,8 @@ class Database {
   getAll(String url, {Map<String, String> headers}) async {
     return await http.get(url, headers: headers);
   }
+
+  getById(String url, String id, {Map<String, String> headers}) async {
+    return await http.get(url + id, headers: headers);
+  }
 }
