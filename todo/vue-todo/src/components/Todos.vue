@@ -11,7 +11,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-6 mx-auto my-5">
+        <div class="col-md-6 mx-auto mt-5 mb-2">
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
               <div>
@@ -19,25 +19,33 @@
                 {{ todo.title }}
               </div>
               <div>
-                <button class="btn btn-warning btn-sm mx-1" v-on:click="editTodo(todo._id, todo.title)"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-info btn-sm mx-1" v-on:click="editTodo(todo._id, todo.title)"><i class="fas fa-edit"></i></button>
                 <button class="btn btn-danger btn-sm mx-1" v-on:click="deleteTodo(todo._id)"><i class="fas fa-trash"></i></button>
               </div>
             </li>
           </ul>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <form @submit.prevent="postTodo" v-if="!this.id">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter TODO" v-model="title" />
+              <button class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+
+          <form @submit.prevent="patchTodo" v-if="this.id">
+            <input v-model="id" placeholder="id" hidden />
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter TODO" v-model="title" />
+              <button class="btn btn-primary">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <form @submit.prevent="postTodo" v-if="!this.id">
-      <input v-model="title" placeholder="title" />
-      <button>Submit</button>
-    </form>
-
-    <form @submit.prevent="patchTodo" v-if="this.id">
-      <input v-model="id" placeholder="id" hidden />
-      <input v-model="title" placeholder="title" />
-      <button>Update</button>
-    </form>
   </div>
 </template>
 
