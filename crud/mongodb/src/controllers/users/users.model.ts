@@ -4,4 +4,4 @@ const schema = MongoSchema({
   // Add mongo fields here
 });
 
-export default MongoModel("Sample", schema);
+export default MongoModel("Users", schema);
