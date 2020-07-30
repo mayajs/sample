@@ -8,10 +8,18 @@
 </script>
 
 <style>
-
+  .todo {
+    background-color: #333;
+    color: #fff;
+    text-align: "center";
+    padding: 10px;
+  }
 </style>
 
 <Container>
+  <header class="todo text-center">
+    <h1>TodoList</h1>
+  </header>
   {#each list as item (item.id)}
     <div>
       <h4>{item.title}</h4>
