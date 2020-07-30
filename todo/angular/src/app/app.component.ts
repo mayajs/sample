@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-root",
@@ -6,5 +7,11 @@ import { Component } from "@angular/core";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  title = "angular";
+  todoList = [];
+  todo = "";
+
+  addTodo(): void {
+    this.todoList.push(this.todo);
+    console.log(this.todoList);
+  }
 }
