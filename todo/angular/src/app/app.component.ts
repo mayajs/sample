@@ -1,5 +1,4 @@
 import { Component, NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-root",
@@ -12,6 +11,5 @@ export class AppComponent {
 
   addTodo(): void {
     this.todoList.push(this.todo);
-    console.log(this.todoList);
   }
 }
