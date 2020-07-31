@@ -15,13 +15,14 @@
           <h4 class="text-center" v-if="errorMessage">{{ errorMessage }}</h4>
           <ul class="list-group" v-if="!errorMessage">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
+              <input class="form-check-input mr-1" type="checkbox" v-bind:checked="todo.completed" v-on:change="onChange(todo, $event)" />
               <span class="flex-grow-1 ml-1">{{ todo.title }}</span>
 
-              <button class="btn btn-action btn-info badge mx-1" v-on:click="editTodo(todo._id, todo.title)">
+              <button class="btn btn-action btn-info badge mx-1" v-on:click="editTodo(todo)">
                 <span class="fas fa-edit"></span>
               </button>
 
-              <button class="btn btn-action btn-danger badge mx-1" v-on:click="deleteTodo(todo._id)">
+              <button class="btn btn-action btn-danger badge mx-1" v-on:click="removeTodo(todo._id)">
                 <span class="fas fa-trash"></span>
               </button>
             </li>
@@ -31,17 +32,16 @@
 
       <div class="row">
         <div class="col mx-auto">
-          <form @submit.prevent="postTodo" v-if="!this.id">
+          <form @submit.prevent="addTodo" v-if="!this.todo._id">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter TODO here..." v-model="title" />
+              <input type="text" class="form-control" placeholder="Enter TODO here..." v-model="todo.title" />
               <button class="btn btn-success">Add</button>
             </div>
           </form>
 
-          <form @submit.prevent="patchTodo" v-if="this.id">
-            <input v-model="id" placeholder="id" hidden />
+          <form @submit.prevent="updateTodo" v-if="this.todo._id">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter TODO here..." v-model="title" />
+              <input type="text" class="form-control" placeholder="Enter TODO here..." v-model="todo.title" />
               <button class="btn btn-primary">Update</button>
             </div>
           </form>
@@ -53,8 +53,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import axios from "axios";
-import { environment as env } from "../environments/index";
+import { getTodos, postTodo, patchTodo, deleteTodo } from "../services/api.service";
 
 interface ITodo {
   _id?: string;
@@ -65,66 +64,58 @@ interface ITodo {
 @Component({})
 export default class Todos extends Vue {
   @Prop() private msg!: string;
-  private id!: string;
-  private title!: string;
-  private completed!: boolean;
   private todos!: ITodo[];
-  private url = env.API_URL;
+  private todo!: ITodo;
   private errorMessage!: string;
 
   data() {
     return {
       todos: null,
-      id: "",
-      title: "",
-      completed: false,
-      todo: { id: "", title: "", completed: false },
       errorMessage: "",
+      todo: { _id: "", title: "", completed: false },
     };
   }
 
   mounted() {
-    this.getTodos();
-  }
-
-  getTodos() {
-    axios
-      .get<ITodo[]>(`${this.url}todos`)
+    getTodos()
       .then(({ data }) => (this.todos = data))
       .catch(() => (this.errorMessage = "There are no todo items to show..."));
   }
 
-  postTodo() {
-    axios
-      .post<ITodo>(`${this.url}todos`, { title: this.title, completed: this.completed })
+  addTodo() {
+    postTodo(this.todo.title)
       .then(() => {
-        this.title = "";
-        this.getTodos();
+        this.todo = { _id: "", title: "", completed: false };
+        return getTodos();
       })
+      .then(({ data }) => (this.todos = data))
       .catch((error) => (this.errorMessage = error));
   }
 
-  patchTodo() {
-    axios
-      .patch<ITodo>(`${this.url}todos/${this.id}`, { title: this.title, completed: this.completed })
+  updateTodo() {
+    patchTodo({ ...this.todo })
       .then(() => {
-        this.id = "";
-        this.title = "";
-        this.getTodos();
+        this.todo = { _id: "", title: "", completed: false };
+        return getTodos();
       })
+      .then(({ data }) => (this.todos = data))
       .catch((error) => (this.errorMessage = error));
   }
 
-  deleteTodo(id: string) {
-    axios
-      .delete(`${this.url}todos/${id}`)
-      .then(() => this.getTodos())
+  removeTodo(id: string) {
+    deleteTodo(id)
+      .then(() => getTodos())
+      .then(({ data }) => (this.todos = data))
       .catch((error) => (this.errorMessage = error));
   }
 
-  editTodo(id: string, title: string) {
-    this.id = id;
-    this.title = title;
+  editTodo(todo: ITodo) {
+    this.todo = { ...todo };
+  }
+
+  onChange(todo: ITodo, event: Event) {
+    const check = (event.target as HTMLInputElement).checked;
+    patchTodo({ ...todo, completed: check });
   }
 }
 </script>
