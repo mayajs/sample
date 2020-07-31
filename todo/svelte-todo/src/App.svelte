@@ -1,5 +1,5 @@
 <script>
-  import { Container } from "sveltestrap";
+  import { Container, Col, Row } from "sveltestrap";
   let list = [
     { title: "Sleeping", completed: false, id: 1 },
     { title: "Walking", completed: false, id: 2 },
@@ -21,8 +21,13 @@
     <h1>TodoList</h1>
   </header>
   {#each list as item (item.id)}
-    <div>
-      <h4>{item.title}</h4>
-    </div>
+    <Row>
+      <Col xs={{ size: 1, offset: 1 }}>
+        <input type="checkbox" />
+      </Col>
+      <Col>
+        <h4>{item.title}</h4>
+      </Col>
+    </Row>
   {/each}
 </Container>
