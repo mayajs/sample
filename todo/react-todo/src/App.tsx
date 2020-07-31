@@ -42,7 +42,13 @@ class App extends Component<{}, IPropsApp> {
   };
 
   // Update todo item
-  updateItem = (todo: ITodo) => {};
+  updateItem = (todo: ITodo) => {
+    axios.patch(`${API_URL}/${todo._id}`, { ...todo }).then(({ data }) => {
+      const list = [...this.state.list.map((item) => (item._id === data._id ? data : item))];
+      this.setState({ list, isEdit: false });
+      todo = { _id: "", title: "", completed: false };
+    });
+  };
 
   actions = {
     toggleComplete: this.toggleComplete,
