@@ -1,4 +1,5 @@
-# React / Mayajs Todo App
+<p align="center"><img src="https://github.com/mayajs/sample/blob/master/assets/maya-react.png"></p>
+<h1 align="center">Mayajs React Todo App</h1>
 
 ## Description
 
