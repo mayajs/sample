@@ -11,15 +11,19 @@
       </nav>
 
       <div class="row">
-        <div class="col mx-auto mt-5 mb-2">
+        <div class="col mx-auto my-2">
           <h4 class="text-center" v-if="errorMessage">{{ errorMessage }}</h4>
           <ul class="list-group" v-if="!errorMessage">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
-              {{ todo.title }}
-              <div>
-                <button class="btn btn-info btn-sm mx-1" v-on:click="editTodo(todo._id, todo.title)"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-danger btn-sm mx-1" v-on:click="deleteTodo(todo._id)"><i class="fas fa-trash"></i></button>
-              </div>
+              <span class="flex-grow-1 ml-1">{{ todo.title }}</span>
+
+              <button class="btn btn-action btn-info badge mx-1" v-on:click="editTodo(todo._id, todo.title)">
+                <span class="fas fa-edit"></span>
+              </button>
+
+              <button class="btn btn-action btn-danger badge mx-1" v-on:click="deleteTodo(todo._id)">
+                <span class="fas fa-trash"></span>
+              </button>
             </li>
           </ul>
         </div>
@@ -125,4 +129,9 @@ export default class Todos extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn-action {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+</style>
