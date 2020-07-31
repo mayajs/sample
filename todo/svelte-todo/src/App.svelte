@@ -5,6 +5,7 @@
 
   let title = "";
   let list = [];
+  let todo = {};
   let isEdit = false;
 
   onMount(async () => {
@@ -14,10 +15,11 @@
 
   function onSubmit(event) {
     event.preventDefault();
-    todoList();
+    addItem();
   }
 
   function onEdit(item) {
+    todo = { ...item };
     event.preventDefault();
   }
 
@@ -26,7 +28,7 @@
     list = list.filter((item) => item._id !== result._id);
   }
 
-  async function todoList() {
+  async function addItem() {
     const result = await addTodo({ title, completed: false });
     title = "";
     list = [...list, result];
