@@ -24,6 +24,7 @@
     color: #fff;
     text-align: "center";
     padding: 10px;
+    margin: 1rem 0;
   }
 </style>
 
