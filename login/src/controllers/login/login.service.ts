@@ -2,12 +2,12 @@ import { Injectable } from "@mayajs/core";
 import { Models } from "@mayajs/mongo";
 import { PaginateModel } from "mongoose";
 import { Document } from "mongoose";
- interface ILogin {
+interface ILogin {
   email: string;
   password: string;
 }
 
- interface ILoginModel extends ILogin , Document {
+interface ILoginModel extends ILogin, Document {
   comparePassword: (password: string) => boolean;
 }
 
@@ -17,7 +17,21 @@ export class LoginServices {
 
   constructor() {}
 
-  login(body: any) {
-    return body;
+  async login(body: any) {
+    try {
+      const user = await this.model.findOne({email: body.email});
+      
+      if (!user) {
+        throw "User not found!";
+      }
+
+      if (!user?.comparePassword(body.password)) {
+        throw "Password not matched";
+      }
+
+      return "Login successfully!";
+    } catch (error) {
+      return error;
+    }
   }
 }
