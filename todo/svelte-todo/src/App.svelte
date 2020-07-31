@@ -51,7 +51,9 @@
         <h4>{item.title}</h4>
       </Col>
       <Col xs={{ size: 1, offset: 1 }} style="padding:.2rem">
-        <Button color="danger" on:click={() => onDelete(item._id)}>X</Button>
+        <Button color="danger" on:click={() => onDelete(item._id)}>
+          <span class="fas fa-trash" />
+        </Button>
       </Col>
     </Row>
   {:else}
