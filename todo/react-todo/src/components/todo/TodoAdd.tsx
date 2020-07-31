@@ -18,16 +18,13 @@ export default class TodoAdd extends Component<IPropsTodoAdd> {
 
   render() {
     return (
-      <form style={{ display: "flex" }} onSubmit={this.onSubmit}>
-        <input
-          type="text"
-          name="title"
-          style={{ flex: "6", padding: ".5rem" }}
-          placeholder="Enter Todo ..."
-          value={this.state.title}
-          onChange={this.onChange}
-        />
-        <input type="submit" value="Submit" className="btn" style={this.btnStyle} />
+      <form onSubmit={this.onSubmit}>
+        <div className="input-group">
+          <input className="form-control" type="text" name="title" placeholder="Enter TODO here..." value={this.state.title} onChange={this.onChange} />
+          <button type="submit" className="btn btn-success">
+            Add
+          </button>
+        </div>
       </form>
     );
   }
