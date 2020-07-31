@@ -1,4 +1,5 @@
-# vue-todo
+<p align="center"><img src="https://github.com/mayajs/sample/blob/master/assets/maya-vue.png"></p>
+<h1 align="center">Mayajs Vue Todo App</h1>
 
 ## Project setup
 ```
