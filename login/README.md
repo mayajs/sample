@@ -5,15 +5,18 @@ This project was created with [MayaJS CLI](https://github.com/mayajs/cli) versio
 ## Getting Started
 
 - Install Nodejs, donwload it [here](https://nodejs.org/dist/v12.18.2/node-v12.18.2-x64.msi).
-> Note: If you already have NodeJS installed skip this step.
+
+  > Note: If you already have NodeJS installed skip this step.
 
 - Install MayajJS using this command
+
   - `npm i @mayajs/cli -g` or for linux/mac users `sudo npm i @mayajs/cli -g`
-> Note: If you already have MayajJS installed skip this step.
+    > Note: If you already have MayajJS installed skip this step.
 
 - Navigate to your project folder
 
 > If you are cloning this project for the first time you need to install all the dependencies first before running this project otherwise skip this.
+
 - Install dependencies using this command
   - `npm i`
 
@@ -28,3 +31,17 @@ Run `maya create <service | controller | model > < name | directory >` to create
 ## Build
 
 Run `maya build` or `maya b` to build the project. Use the `--prod` flag for a production build. The build files will be created in the `dist/` directory.
+
+# Contributor
+
+<table>
+  <tr>
+    <td align="center">
+        <a href="https://github.com/jacepm">
+            <img src="https://avatars3.githubusercontent.com/u/65482394?s=400&u=9043fd1e645b31c19106c70afd22a19c9edbf822&v=4" width="200px;" alt="Rhon Umahon"/>
+            <br />
+            <b>Rhon Umahon</b>
+        </a>
+    </td>
+ </tr>
+</table>
