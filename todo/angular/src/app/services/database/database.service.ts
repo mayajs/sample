@@ -11,4 +11,9 @@ export class DatabaseService {
   get(value: string): any {
     return this.http.get(this.URL + value);
   }
+
+  post(value: string, body: any): any {
+    return this.http.post(this.URL + value, body);
+  }
+
 }
