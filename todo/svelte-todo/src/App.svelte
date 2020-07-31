@@ -1,12 +1,13 @@
 <script>
-  import { Container, Col, Row, Button, InputGroup, Input, InputGroupAddon, Form, ListGroup, ListGroupItem } from "sveltestrap";
-  import { getTodo, getTodoList, addTodo, removeTodo, updateTodo } from "./api.service.js";
+  import { Container, Col, Button, InputGroup, Input, InputGroupAddon, Form, ListGroup, ListGroupItem } from "sveltestrap";
+  import { getTodoList, addTodo, removeTodo, updateTodo } from "./api.service.js";
   import { onMount } from "svelte";
 
   let title = "";
   let list = [];
   let todo = {};
   let isEdit = false;
+  let isLoading = false;
 
   onMount(async () => {
     const result = await getTodoList();
@@ -23,6 +24,19 @@
     todo = { ...item };
     title = item.title;
     isEdit = true;
+  }
+
+  function onCheck(item) {
+    event.preventDefault();
+    if (!isLoading) {
+      isLoading = true;
+      const update = async () => {
+        const result = await updateTodo({ ...item, completed: !item.completed });
+        list = [...list.map((item) => (item._id === result._id ? result : item))];
+        isLoading = false;
+      };
+      update();
+    }
   }
 
   async function onDelete(id) {
@@ -61,8 +75,8 @@
   </header>
   <ListGroup>
     {#each list as item (item._id)}
-      <ListGroupItem class="list-group-item d-flex justify-content-between align-items-center">
-        <input type="checkbox" checked={item.completed} />
+      <ListGroupItem class="list-group-item d-flex justify-content-between align-items-center" disabled={isLoading}>
+        <input type="checkbox" checked={item.completed} on:change={() => onCheck(item)} />
         <span class="flex-grow-1 ml-1">{item.title}</span>
         <Button class="btn btn-info mx-1" on:click={() => onEdit(item)}>
           <span class="fas fa-edit" />
