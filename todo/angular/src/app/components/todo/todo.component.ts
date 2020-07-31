@@ -25,4 +25,11 @@ export class TodoComponent implements OnInit {
       this.todoList = data.map((todo: any) => todo);
     });
   }
+
+  addTodo(): void {
+    this.db.post("todos", { title: this.todo, completed: false }).subscribe((data: any) => {
+      this.getTodo();
+      this.todo = "";
+    });
+  }
 }
