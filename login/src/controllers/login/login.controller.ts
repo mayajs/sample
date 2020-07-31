@@ -13,6 +13,7 @@ export class LoginController {
   
   @Post({ path: "/", middlewares: [] })
   root(req: Request, res: Response, next: NextFunction): void {
-    res.send(this.services.hello());
+    const result = this.services.login(req.body);
+    res.send(result);
   }
 }
