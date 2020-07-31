@@ -63,7 +63,7 @@
     <InputGroup>
       <Input type="text" bind:value={title} placeholder="Enter TODO here..." readonly={false} />
       <InputGroupAddon addonType="append">
-        <Button color="success" type="submit " id="submit-btn">Add</Button>
+        <Button disabled={title === ''} color="success" type="submit " id="submit-btn">Add</Button>
       </InputGroupAddon>
     </InputGroup>
   </Form>
