@@ -39,7 +39,7 @@ class App extends Component<{}, IPropsApp> {
   render() {
     return (
       <div className="App">
-        <div className="container">
+        <div className="container mt-4 col-md-5">
           <Header />
           <TodoList list={this.state.list} actions={this.actions} />
           <TodoAdd addItem={this.addItem} />
