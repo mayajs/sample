@@ -41,4 +41,12 @@ export class TodoComponent implements OnInit {
       this.isEdit = true;
     });
   }
+
+  patchTodo(id: string): void {
+    this.db.patch(`todos/${id}`, { title: this.todo, completed: false }).subscribe((data: any) => {
+      this.todo = "";
+      this.isEdit = false;
+      this.getTodo();
+    });
+  }
 }
