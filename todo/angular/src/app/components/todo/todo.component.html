@@ -1,5 +1,23 @@
-<div class="card">
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item" *ngFor="let item of list">{{ item }}</li>
+<h3 *ngIf="todoList.length === 0">No Data</h3>
+<div class="card" *ngIf="todoList.length > 0">
+  <ul class="list-group">
+    <li class="list-group-item d-flex" *ngFor="let todo of todoList">
+      <span class="flex-grow-1 ml-1">{{ todo.title }}</span>
+
+      <button class="btn btn-action btn-success badge" (click)="editTodo(todo)">
+        <span class="fa fa-pencil"></span>
+      </button>
+
+      <button class="btn btn-action btn-danger badge ml-1" (click)="deleteTodo(todo._id)">
+        <span class="fa fa-trash-o"></span>
+      </button>
+    </li>
   </ul>
+</div>
+<div class="d-flex mt-3">
+  <input class="form-control mr-2" type="text" placeholder="Type here..." [(ngModel)]="todo" />
+  <input type="text" [(ngModel)]="id" *ngIf="isEdit" hidden />
+
+  <button class="btn btn-primary" *ngIf="!isEdit" (click)="addTodo()">Submit</button>
+  <button class="btn btn-primary" *ngIf="isEdit" (click)="patchTodo(id)">Edit</button>
 </div>
