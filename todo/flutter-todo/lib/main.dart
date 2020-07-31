@@ -111,7 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
       ),
-      Text(todos[index].title),
+      Text(
+        todos[index].title,
+        style: TextStyle(
+          fontSize: 20,
+          height: 1,
+        ),
+      ),
     ];
   }
 
