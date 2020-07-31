@@ -1,17 +1,17 @@
 <template>
   <div>
-    <nav class="navbar navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img src="../assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy" />
-          {{ msg }}
-        </a>
-      </div>
-    </nav>
+    <div class="container mt-4 col-md-5">
+      <nav class="navbar navbar-dark bg-dark mb-2">
+        <div class="container-fluid">
+          <a class="navbar-brand mx-auto">
+            <img src="../assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy" />
+            {{ msg }}
+          </a>
+        </div>
+      </nav>
 
-    <div class="container">
       <div class="row">
-        <div class="col-md-6 mx-auto mt-5 mb-2">
+        <div class="col mx-auto mt-5 mb-2">
           <h4 class="text-center" v-if="errorMessage">{{ errorMessage }}</h4>
           <ul class="list-group" v-if="!errorMessage">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
@@ -26,11 +26,11 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6 mx-auto">
+        <div class="col mx-auto">
           <form @submit.prevent="postTodo" v-if="!this.id">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Enter TODO" v-model="title" />
-              <button class="btn btn-primary">Add</button>
+              <button class="btn btn-success">Add</button>
             </div>
           </form>
 
@@ -74,6 +74,7 @@ export default class Todos extends Vue {
       id: "",
       title: "",
       completed: false,
+      todo: { id: "", title: "", completed: false },
       errorMessage: "",
     };
   }
