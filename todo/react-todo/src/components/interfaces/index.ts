@@ -1,6 +1,7 @@
 interface IActions {
   toggleComplete: (id: string) => void;
   deleteItem: (id: string) => void;
+  onEdit: (todo: ITodo) => void;
 }
 
 export interface ITodo {
@@ -11,6 +12,7 @@ export interface ITodo {
 
 export interface IPropsApp {
   list: ITodo[];
+  isEdit: boolean;
 }
 
 export interface IPropsTodoItem {
@@ -25,4 +27,9 @@ export interface IPropsTodoList {
 
 export interface IPropsTodoAdd {
   addItem: (title: string) => void;
+}
+
+export interface IPropsTodoEdit {
+  todo: ITodo;
+  updateItem: (todo: ITodo) => void;
 }
