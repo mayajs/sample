@@ -16,4 +16,7 @@ export class DatabaseService {
     return this.http.post(this.URL + value, body);
   }
 
+  patch(value: string, body: any): any {
+    return this.http.patch(this.URL + value, body);
+  }
 }
