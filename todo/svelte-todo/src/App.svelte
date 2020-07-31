@@ -18,8 +18,9 @@
     });
   }
 
-  function onDelete(id) {
-    console.log("Delete", id);
+  async function onDelete(id) {
+    const result = await removeTodo(id);
+    list = list.filter((item) => item._id !== result._id);
   }
 </script>
 
