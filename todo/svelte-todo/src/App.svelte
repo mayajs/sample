@@ -1,5 +1,5 @@
 <script>
-  import { Container, Col, Row } from "sveltestrap";
+  import { Container, Col, Row, Button } from "sveltestrap";
   let list = [
     { title: "Sleeping", completed: false, id: 1 },
     { title: "Walking", completed: false, id: 2 },
@@ -27,6 +27,9 @@
       </Col>
       <Col>
         <h4>{item.title}</h4>
+      </Col>
+      <Col xs={{ size: 1, offset: 1 }} style="padding:.2rem">
+        <Button class="btn-danger">X</Button>
       </Col>
     </Row>
   {/each}
