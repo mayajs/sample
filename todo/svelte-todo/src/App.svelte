@@ -60,19 +60,18 @@
 </script>
 
 <style>
-  .todo {
-    background-color: #333;
-    color: #fff;
-    text-align: "center";
-    padding: 10px;
-    margin: 1rem 0;
-  }
+
 </style>
 
 <Container class="container mt-4 col-md-5">
-  <header class="todo text-center">
-    <h1>TodoList</h1>
-  </header>
+  <nav class="navbar navbar-dark bg-dark mb-2">
+    <div class="container-fluid">
+      <a class="navbar-brand mx-auto" href="/">
+        <img src="./logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy" />
+        Svelte Todo List
+      </a>
+    </div>
+  </nav>
   <ListGroup>
     {#each list as item (item._id)}
       <ListGroupItem class="list-group-item d-flex justify-content-between align-items-center" disabled={isLoading}>
