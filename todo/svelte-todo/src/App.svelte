@@ -14,6 +14,7 @@
   function onSubmit(event) {
     event.preventDefault();
     addTodo({ title, completed: false }).then((data) => {
+      title = "";
       list = [...list, data];
     });
   }
