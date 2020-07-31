@@ -1,5 +1,5 @@
 <script>
-  import { Container, Col, Row, Button } from "sveltestrap";
+  import { Container, Col, Row, Button, InputGroup, Input, InputGroupAddon, Form } from "sveltestrap";
   let list = [
     { title: "Sleeping", completed: false, id: 1 },
     { title: "Walking", completed: false, id: 2 },
@@ -33,4 +33,12 @@
       </Col>
     </Row>
   {/each}
+  <Form class="px-3 mt-2">
+    <InputGroup>
+      <Input type="text" />
+      <InputGroupAddon addonType="append">
+        <Button>Add</Button>
+      </InputGroupAddon>
+    </InputGroup>
+  </Form>
 </Container>
