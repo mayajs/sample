@@ -29,7 +29,7 @@
         <div class="col mx-auto">
           <form @submit.prevent="postTodo" v-if="!this.id">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter TODO" v-model="title" />
+              <input type="text" class="form-control" placeholder="Enter TODO here..." v-model="title" />
               <button class="btn btn-success">Add</button>
             </div>
           </form>
@@ -37,7 +37,7 @@
           <form @submit.prevent="patchTodo" v-if="this.id">
             <input v-model="id" placeholder="id" hidden />
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter TODO" v-model="title" />
+              <input type="text" class="form-control" placeholder="Enter TODO here..." v-model="title" />
               <button class="btn btn-primary">Update</button>
             </div>
           </form>
