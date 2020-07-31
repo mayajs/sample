@@ -32,4 +32,13 @@ export class TodoComponent implements OnInit {
       this.todo = "";
     });
   }
+
+  editTodo(todo: any): void {
+    this.db.get(`todos/${todo._id}`).subscribe((data: any) => {
+      const { title, _id: id } = data[0];
+      this.todo = title;
+      this.id = id;
+      this.isEdit = true;
+    });
+  }
 }
