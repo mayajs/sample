@@ -12,7 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 mx-auto mt-5 mb-2">
-          <h1 class="text-center" v-if="errorMessage">{{ errorMessage }}</h1>
+          <h4 class="text-center" v-if="errorMessage">{{ errorMessage }}</h4>
           <ul class="list-group" v-if="!errorMessage">
             <li class="list-group-item d-flex justify-content-between align-items-center" v-for="todo in todos" :key="todo._id">
               {{ todo.title }}
@@ -30,7 +30,7 @@
           <form @submit.prevent="postTodo" v-if="!this.id">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Enter TODO" v-model="title" />
-              <button class="btn btn-primary">Submit</button>
+              <button class="btn btn-primary">Add</button>
             </div>
           </form>
 
@@ -86,7 +86,7 @@ export default class Todos extends Vue {
     axios
       .get<ITodo[]>(`${this.url}todos`)
       .then(({ data }) => (this.todos = data))
-      .catch((error) => (this.errorMessage = error));
+      .catch(() => (this.errorMessage = "There are no todo items to show..."));
   }
 
   postTodo() {
