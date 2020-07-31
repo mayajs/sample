@@ -1,12 +1,15 @@
 <script>
   import { Container, Col, Row, Button, InputGroup, Input, InputGroupAddon, Form } from "sveltestrap";
+  import { getTodo, getTodoList, addTodo, removeTodo } from "./api.service.js";
+  import { onMount } from "svelte";
 
   let title = "";
-  let list = [
-    { title: "Sleeping", completed: false, id: 1 },
-    { title: "Walking", completed: false, id: 2 },
-    { title: "Eating", completed: false, id: 3 },
-  ];
+  let list = [];
+
+  onMount(async () => {
+    const result = await getTodoList();
+    list = result;
+  });
 
   function onSubmit(event) {
     event.preventDefault();
@@ -32,7 +35,7 @@
   <header class="todo text-center">
     <h1>TodoList</h1>
   </header>
-  {#each list as item (item.id)}
+  {#each list as item (item._id)}
     <Row>
       <Col xs={{ size: 1 }} class="ml-3">
         <input type="checkbox" checked={item.completed} />
@@ -41,7 +44,7 @@
         <h4>{item.title}</h4>
       </Col>
       <Col xs={{ size: 1, offset: 1 }} style="padding:.2rem">
-        <Button color="danger" on:click={() => onDelete(item.id)}>X</Button>
+        <Button color="danger" on:click={() => onDelete(item._id)}>X</Button>
       </Col>
     </Row>
   {:else}
