@@ -1,5 +1,5 @@
 import { Mongo } from "@mayajs/mongo";
-import sample from "../controllers/sample/sample.model";
+import sample from "../controllers/login/login.model";
 
 export = Mongo({
   name: "your-db-name-here",
