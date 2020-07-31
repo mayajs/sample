@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database/database.service";
-import { Subscriber } from "rxjs";
-import { AppComponent } from "src/app/app.component";
+
+interface ITodo {
+  _id: string;
+  title: string;
+  completed: boolean;
+}
 
 @Component({
   selector: "app-todo",
@@ -9,11 +13,11 @@ import { AppComponent } from "src/app/app.component";
   styleUrls: ["./todo.component.scss"],
 })
 export class TodoComponent implements OnInit {
-  todoList = [];
+  todoList: ITodo[] = [];
   isEdit = false;
   title = "";
   id = "";
-  completed = false;
+  selectedTodo: ITodo = { _id: "", title: "", completed: false };
 
   constructor(private db: DatabaseService) {}
 
@@ -22,29 +26,30 @@ export class TodoComponent implements OnInit {
   }
 
   getTodo(): void {
-    this.db.get("todos").subscribe((data: any) => {
-      this.todoList = data.map((todo: any) => todo);
+    this.db.get("todos").subscribe((data: ITodo[]) => {
+      this.todoList = data.map((todo: ITodo) => todo);
     });
   }
 
   addTodo(): void {
-    this.db.post("todos", { title: this.title, completed: false }).subscribe((data: any) => {
+    this.db.post("todos", { title: this.title, completed: false }).subscribe((data: ITodo) => {
       this.getTodo();
       this.title = "";
     });
   }
 
-  editTodo(todo: any): void {
-    this.db.get(`todos/${todo._id}`).subscribe((data: any) => {
+  editTodo(todo: ITodo): void {
+    this.db.get(`todos/${todo._id}`).subscribe((data: ITodo[]) => {
       const { title, _id: id } = data[0];
       this.title = title;
       this.id = id;
       this.isEdit = true;
+      this.selectedTodo = data[0];
     });
   }
 
   patchTodo(id: string, check: boolean = false): void {
-    this.db.patch(`todos/${id}`, { title: this.title, completed: check }).subscribe((data: any) => {
+    this.db.patch(`todos/${id}`, { title: this.title, completed: check }).subscribe((data: ITodo) => {
       this.title = "";
       this.isEdit = false;
       this.getTodo();
@@ -52,12 +57,12 @@ export class TodoComponent implements OnInit {
   }
 
   deleteTodo(id: string): void {
-    this.db.delete(`todos/${id}`).subscribe((data: any) => {
+    this.db.delete(`todos/${id}`).subscribe((data: ITodo) => {
       this.getTodo();
     });
   }
 
-  onChange(todo: any, values: any): void {
+  onChange(todo: ITodo, values: any): void {
     const check = values.currentTarget.checked;
     this.title = todo.title;
     this.patchTodo(todo._id, check);
