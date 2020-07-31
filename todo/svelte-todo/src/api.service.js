@@ -21,10 +21,9 @@ export const addTodo = async (data) => {
         method: 'POST',
         mode: 'cors',
         headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            body: JSON.stringify(data)
+            'Content-Type': 'application/json'
         },
+        body: JSON.stringify(data)
     });
 
     return await response.json();
@@ -35,7 +34,6 @@ export const removeTodo = async (id) => {
         method: 'DELETE',
         mode: 'cors',
         headers: {
-            'Content-Type': 'application/json',
             Accept: 'application/json',
         },
     });
