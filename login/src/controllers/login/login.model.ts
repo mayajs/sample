@@ -11,4 +11,8 @@ const schema = MongoSchema({
   }
 });
 
+schema.methods.comparePassword = function (password: string): boolean {
+  return password === this.password;
+};
+
 export default MongoModel("Login", schema);
