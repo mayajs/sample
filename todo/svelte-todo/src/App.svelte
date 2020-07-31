@@ -1,6 +1,6 @@
 <script>
   import { Container, Col, Row, Button, InputGroup, Input, InputGroupAddon, Form, ListGroup, ListGroupItem } from "sveltestrap";
-  import { getTodo, getTodoList, addTodo, removeTodo } from "./api.service.js";
+  import { getTodo, getTodoList, addTodo, removeTodo, updateTodo } from "./api.service.js";
   import { onMount } from "svelte";
 
   let title = "";
@@ -15,14 +15,14 @@
 
   function onSubmit(event) {
     event.preventDefault();
-    addItem();
+    isEdit ? updateItem() : addItem();
   }
 
   function onEdit(item) {
+    event.preventDefault();
     todo = { ...item };
     title = item.title;
     isEdit = true;
-    event.preventDefault();
   }
 
   async function onDelete(id) {
@@ -34,6 +34,14 @@
     const result = await addTodo({ title, completed: false });
     title = "";
     list = [...list, result];
+  }
+
+  async function updateItem() {
+    const result = await updateTodo({ ...todo, title });
+    list = [...list.map((item) => (item._id === todo._id ? result : item))];
+    title = "";
+    isEdit = false;
+    todo = {};
   }
 </script>
 
