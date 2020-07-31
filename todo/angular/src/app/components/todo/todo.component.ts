@@ -49,4 +49,10 @@ export class TodoComponent implements OnInit {
       this.getTodo();
     });
   }
+
+  deleteTodo(id: string): void {
+    this.db.delete(`todos/${id}`).subscribe((data: any) => {
+      this.getTodo();
+    });
+  }
 }
