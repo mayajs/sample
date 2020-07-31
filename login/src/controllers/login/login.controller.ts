@@ -11,7 +11,7 @@ import { LoginServices } from "./login.service";
 export class LoginController {
   constructor(private services: LoginServices) {}
   
-  @Get({ path: "/", middlewares: [] })
+  @Post({ path: "/", middlewares: [] })
   root(req: Request, res: Response, next: NextFunction): void {
     res.send(this.services.hello());
   }
