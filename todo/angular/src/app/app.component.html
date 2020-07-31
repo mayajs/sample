@@ -1,11 +1,4 @@
 <app-nav-bar></app-nav-bar>
 <div class="container mt-4 col-md-5">
-  <h3 *ngIf="todoList.length === 0">No Data</h3>
-  <app-todo [list]="todoList" *ngIf="todoList.length > 0"></app-todo>
-
-  <div class="d-flex mt-3">
-    <input class="form-control mr-2" type="text" placeholder="Type here..." aria-label="Submit" [(ngModel)]="todo" />
-
-    <button class="btn btn-primary" type="submit" (click)="addTodo()">Submit</button>
-  </div>
+  <app-todo></app-todo>
 </div>
