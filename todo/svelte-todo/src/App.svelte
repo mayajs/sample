@@ -1,10 +1,17 @@
 <script>
   import { Container, Col, Row, Button, InputGroup, Input, InputGroupAddon, Form } from "sveltestrap";
+
+  let title = "";
   let list = [
     { title: "Sleeping", completed: false, id: 1 },
     { title: "Walking", completed: false, id: 2 },
     { title: "Eating", completed: false, id: 3 },
   ];
+
+  function onSubmit(event) {
+    event.preventDefault();
+    console.log("Add", title);
+  }
 </script>
 
 <style>
@@ -29,15 +36,15 @@
         <h4>{item.title}</h4>
       </Col>
       <Col xs={{ size: 1, offset: 1 }} style="padding:.2rem">
-        <Button color={'danger'}>X</Button>
+        <Button color="danger">X</Button>
       </Col>
     </Row>
   {/each}
-  <Form class="px-3 mt-2">
+  <Form class="px-3 mt-2" on:submit={onSubmit}>
     <InputGroup>
-      <Input type="text" />
+      <Input type="text" bind:value={title} placeholder="Enter TODO here..." readonly={false} />
       <InputGroupAddon addonType="append">
-        <Button color={'success'}>Add</Button>
+        <Button color="success" type="submit " id="submit-btn">Add</Button>
       </InputGroupAddon>
     </InputGroup>
   </Form>
