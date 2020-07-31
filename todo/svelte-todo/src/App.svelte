@@ -13,7 +13,9 @@
 
   function onSubmit(event) {
     event.preventDefault();
-    console.log("Add", title);
+    addTodo({ title, completed: false }).then((data) => {
+      list = [...list, data];
+    });
   }
 
   function onDelete(id) {
