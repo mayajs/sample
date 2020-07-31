@@ -20,6 +20,8 @@
 
   function onEdit(item) {
     todo = { ...item };
+    title = item.title;
+    isEdit = true;
     event.preventDefault();
   }
 
