@@ -19,4 +19,8 @@ export class DatabaseService {
   patch(value: string, body: any): any {
     return this.http.patch(this.URL + value, body);
   }
+
+  delete(value: string): any {
+    return this.http.delete(this.URL + value);
+  }
 }
