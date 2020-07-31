@@ -19,10 +19,6 @@ class TodoService {
     }
   }
 
-  getById(String url, String id, {Map<String, String> headers}) async {
-    return await http.get(url + id, headers: headers);
-  }
-
   Future<String> post(TodoModel todo) async {
     http.Response res =
         await http.post(url, headers: headers, body: convert.jsonEncode(todo));

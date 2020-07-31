@@ -84,13 +84,41 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(todos[index].title),
+          Row(
+            children: _checkboxAndLabel(todos, index),
+          ),
           Row(
             children: _actionButtons(todos, index),
           ),
         ],
       ),
     );
+  }
+
+  _checkboxAndLabel(List<TodoModel> todos, int index) {
+    return <Widget>[
+      Checkbox(
+        value: todos[index].completed,
+        onChanged: (value) {
+          value = todos[index].completed;
+          setState(() {
+            todoService
+                .patch(TodoModel(
+                    id: todos[index].id,
+                    title: todos[index].title,
+                    completed: !value))
+                .then((String message) => _toastBuilder(message));
+          });
+        },
+      ),
+      Text(
+        todos[index].title,
+        style: TextStyle(
+          fontSize: 20,
+          height: 1,
+        ),
+      ),
+    ];
   }
 
   _actionButtons(List<TodoModel> todos, int index) {
@@ -206,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<bool>  _toastBuilder(String message) {
+  Future<bool> _toastBuilder(String message) {
     return Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,

@@ -1,39 +1,28 @@
-import React, { Component, CSSProperties } from "react";
+import React, { Component } from "react";
 import { IPropsTodoItem } from "../interfaces";
 
 export default class TodoItem extends Component<IPropsTodoItem> {
   setStyle = (completed: boolean) => {
     return {
-      background: "#f4f4f4",
-      padding: "1rem",
-      borderBottom: "1px #ccc solid",
       textDecoration: completed ? "line-through" : "none",
     };
   };
 
-  btnStyle: CSSProperties = {
-    background: "#ff0000",
-    color: "#fff",
-    border: "none",
-    padding: "5px 9px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    float: "right",
-  };
-
   render() {
+    const { toggleComplete, deleteItem, onEdit } = this.props.actions;
     const { _id, title, completed } = this.props.todo;
-    const { toggleComplete, deleteItem } = this.props.actions;
     return (
-      <div style={this.setStyle(completed)}>
-        <p>
-          <input type="checkbox" defaultChecked={completed} style={{ marginRight: "1rem" }} onChange={toggleComplete.bind(this, _id)} />
-          {title}
-          <button style={this.btnStyle} onClick={deleteItem.bind(this, _id)}>
-            x
-          </button>
-        </p>
-      </div>
+      <li className="list-group-item d-flex justify-content-between align-items-center" style={this.setStyle(completed)}>
+        <input className="form-check-input mr-1" type="checkbox" defaultChecked={completed} onChange={toggleComplete.bind(this, _id)} />
+        <span className="flex-grow-1 ml-1">{title}</span>
+        <button className="btn btn-action btn-info badge mx-1" onClick={onEdit.bind(this, { _id, title, completed })}>
+          <span className="fas fa-edit"></span>
+        </button>
+
+        <button className="btn btn-action btn-danger badge mx-1" onClick={deleteItem.bind(this, _id)}>
+          <span className="fas fa-trash"></span>
+        </button>
+      </li>
     );
   }
 }

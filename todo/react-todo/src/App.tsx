@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "./components/utility/Header";
 import TodoList from "./components/todo/TodoList";
 import TodoAdd from "./components/todo/TodoAdd";
+import TodoEdit from "./components/todo/TodoEdit";
 import { ITodo, IPropsApp } from "./components/interfaces";
 import axios from "axios";
 import "./App.css";
@@ -9,14 +10,20 @@ import "./App.css";
 const API_URL = "http://localhost:3333/todos";
 
 class App extends Component<{}, IPropsApp> {
-  state: IPropsApp = { list: [] };
+  state: IPropsApp = { list: [], isEdit: false };
+  todo: ITodo = { _id: "", title: "", completed: false };
 
   componentDidMount() {
     axios.get(`${API_URL}`).then((res) => this.setState({ list: res.data }));
   }
 
   // Toggle Complete
-  toggleComplete = (id: string) => this.setState({ list: this.state.list.map(this.mapItem(id)) });
+  toggleComplete = (id: string) => {
+    const selected = this.state.list.filter((item) => item._id === id)[0];
+    axios.patch(`${API_URL}/${id}`, { completed: !selected.completed }).then(({ data }) => {
+      this.setState({ list: this.state.list.map(this.mapItem(id)) });
+    });
+  };
 
   // Map List Items
   mapItem = (id: string) => (item: ITodo) => ({ ...item, completed: item._id === id ? !item.completed : item.completed });
@@ -31,18 +38,36 @@ class App extends Component<{}, IPropsApp> {
     axios.post(API_URL, { title, completed: false }).then((res) => this.setState({ list: [...this.state.list, res.data] }));
   };
 
+  // Set Edit mode
+  onEdit = (todo: ITodo) => {
+    this.setState({
+      isEdit: true,
+    });
+    this.todo = { ...todo };
+  };
+
+  // Update todo item
+  updateItem = (todo: ITodo) => {
+    axios.patch(`${API_URL}/${todo._id}`, { ...todo }).then(({ data }) => {
+      const list = [...this.state.list.map((item) => (item._id === data._id ? data : item))];
+      this.setState({ list, isEdit: false });
+      todo = { _id: "", title: "", completed: false };
+    });
+  };
+
   actions = {
     toggleComplete: this.toggleComplete,
     deleteItem: this.deleteItem,
+    onEdit: this.onEdit,
   };
 
   render() {
     return (
       <div className="App">
-        <div className="container">
+        <div className="container mt-4 col-md-5">
           <Header />
           <TodoList list={this.state.list} actions={this.actions} />
-          <TodoAdd addItem={this.addItem} />
+          {this.state.isEdit ? <TodoEdit todo={this.todo} updateItem={this.updateItem} /> : <TodoAdd addItem={this.addItem} />}
         </div>
       </div>
     );
