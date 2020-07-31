@@ -1,4 +1,5 @@
-# Angular
+<p align="center"><img src="https://github.com/mayajs/sample/blob/master/assets/maya-angular.png"></p>
+<h1 align="center">Mayajs Angular Todo App</h1>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
 
