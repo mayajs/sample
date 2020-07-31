@@ -1,8 +1,8 @@
-import { SampleController } from "./controllers/sample/sample.controller";
+import { LoginController } from "./controllers/login/login.controller";
 
 export const routes = [
   {
-    controllers: [SampleController],
+    controllers: [LoginController],
     middlewares: [],
     path: "",
   },
