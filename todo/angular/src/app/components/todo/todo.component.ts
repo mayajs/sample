@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database/database.service";
 import { Subscriber } from "rxjs";
 import { AppComponent } from "src/app/app.component";
@@ -11,8 +11,9 @@ import { AppComponent } from "src/app/app.component";
 export class TodoComponent implements OnInit {
   todoList = [];
   isEdit = false;
-  todo = "";
+  title = "";
   id = "";
+  completed = false;
 
   constructor(private db: DatabaseService) {}
 
@@ -27,24 +28,24 @@ export class TodoComponent implements OnInit {
   }
 
   addTodo(): void {
-    this.db.post("todos", { title: this.todo, completed: false }).subscribe((data: any) => {
+    this.db.post("todos", { title: this.title, completed: false }).subscribe((data: any) => {
       this.getTodo();
-      this.todo = "";
+      this.title = "";
     });
   }
 
   editTodo(todo: any): void {
     this.db.get(`todos/${todo._id}`).subscribe((data: any) => {
       const { title, _id: id } = data[0];
-      this.todo = title;
+      this.title = title;
       this.id = id;
       this.isEdit = true;
     });
   }
 
-  patchTodo(id: string): void {
-    this.db.patch(`todos/${id}`, { title: this.todo, completed: false }).subscribe((data: any) => {
-      this.todo = "";
+  patchTodo(id: string, check: boolean = false): void {
+    this.db.patch(`todos/${id}`, { title: this.title, completed: check }).subscribe((data: any) => {
+      this.title = "";
       this.isEdit = false;
       this.getTodo();
     });
@@ -54,5 +55,11 @@ export class TodoComponent implements OnInit {
     this.db.delete(`todos/${id}`).subscribe((data: any) => {
       this.getTodo();
     });
+  }
+
+  onChange(todo: any, values: any): void {
+    const check = values.currentTarget.checked;
+    this.title = todo.title;
+    this.patchTodo(todo._id, check);
   }
 }
