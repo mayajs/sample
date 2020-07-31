@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "./components/utility/Header";
 import TodoList from "./components/todo/TodoList";
 import TodoAdd from "./components/todo/TodoAdd";
+import TodoEdit from "./components/todo/TodoEdit";
 import { ITodo, IPropsApp } from "./components/interfaces";
 import axios from "axios";
 import "./App.css";
@@ -9,7 +10,8 @@ import "./App.css";
 const API_URL = "http://localhost:3333/todos";
 
 class App extends Component<{}, IPropsApp> {
-  state: IPropsApp = { list: [] };
+  state: IPropsApp = { list: [], isEdit: false };
+  todo: ITodo = { _id: "", title: "", completed: false };
 
   componentDidMount() {
     axios.get(`${API_URL}`).then((res) => this.setState({ list: res.data }));
@@ -31,9 +33,21 @@ class App extends Component<{}, IPropsApp> {
     axios.post(API_URL, { title, completed: false }).then((res) => this.setState({ list: [...this.state.list, res.data] }));
   };
 
+  // Set Edit mode
+  onEdit = (todo: ITodo) => {
+    this.setState({
+      isEdit: true,
+    });
+    this.todo = { ...todo };
+  };
+
+  // Update todo item
+  updateItem = (todo: ITodo) => {};
+
   actions = {
     toggleComplete: this.toggleComplete,
     deleteItem: this.deleteItem,
+    onEdit: this.onEdit,
   };
 
   render() {
@@ -42,7 +56,7 @@ class App extends Component<{}, IPropsApp> {
         <div className="container mt-4 col-md-5">
           <Header />
           <TodoList list={this.state.list} actions={this.actions} />
-          <TodoAdd addItem={this.addItem} />
+          {this.state.isEdit ? <TodoEdit todo={this.todo} updateItem={this.updateItem} /> : <TodoAdd addItem={this.addItem} />}
         </div>
       </div>
     );
