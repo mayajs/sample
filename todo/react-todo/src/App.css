@@ -11,3 +11,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.4;
 }
+
+.btn-action {
+  height: 2rem;
+  width: 2rem;
+}
