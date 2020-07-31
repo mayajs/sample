@@ -1,11 +1,14 @@
 import { Injectable } from "@mayajs/core";
+import { Models } from "@mayajs/mongo";
+import { PaginateModel } from "mongoose";
 
 @Injectable()
 export class LoginServices {
-  constructor() {}
-  
-  hello() {
-    return "Hello world!";
-  }
+  @Models("login") model!: PaginateModel<any>;
 
+  constructor() {}
+
+  login(body: any) {
+    return body;
+  }
 }
