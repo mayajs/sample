@@ -1,6 +1,5 @@
-# Flutter / Mayajs Todo App
-
-A new Flutter project.
+<p align="center"><img src="https://github.com/mayajs/sample/blob/master/assets/maya-flutter.png"></p>
+<h1 align="center">Mayajs Flutter Todo App</h1>
 
 ## Installation
 
