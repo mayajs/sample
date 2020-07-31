@@ -29,7 +29,7 @@
         <h4>{item.title}</h4>
       </Col>
       <Col xs={{ size: 1, offset: 1 }} style="padding:.2rem">
-        <Button class="btn-danger">X</Button>
+        <Button color={'danger'}>X</Button>
       </Col>
     </Row>
   {/each}
@@ -37,7 +37,7 @@
     <InputGroup>
       <Input type="text" />
       <InputGroupAddon addonType="append">
-        <Button>Add</Button>
+        <Button color={'success'}>Add</Button>
       </InputGroupAddon>
     </InputGroup>
   </Form>
