@@ -34,7 +34,7 @@
   {#each list as item (item.id)}
     <Row>
       <Col xs={{ size: 1, offset: 1 }}>
-        <input type="checkbox" />
+        <input type="checkbox" checked={item.completed} />
       </Col>
       <Col>
         <h4>{item.title}</h4>
