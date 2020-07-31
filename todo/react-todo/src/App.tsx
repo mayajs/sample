@@ -18,7 +18,12 @@ class App extends Component<{}, IPropsApp> {
   }
 
   // Toggle Complete
-  toggleComplete = (id: string) => this.setState({ list: this.state.list.map(this.mapItem(id)) });
+  toggleComplete = (id: string) => {
+    const selected = this.state.list.filter((item) => item._id === id)[0];
+    axios.patch(`${API_URL}/${id}`, { completed: !selected.completed }).then(({ data }) => {
+      this.setState({ list: this.state.list.map(this.mapItem(id)) });
+    });
+  };
 
   // Map List Items
   mapItem = (id: string) => (item: ITodo) => ({ ...item, completed: item._id === id ? !item.completed : item.completed });
