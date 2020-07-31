@@ -13,15 +13,18 @@
 
   function onSubmit(event) {
     event.preventDefault();
-    addTodo({ title, completed: false }).then((data) => {
-      title = "";
-      list = [...list, data];
-    });
+    todoList();
   }
 
   async function onDelete(id) {
     const result = await removeTodo(id);
     list = list.filter((item) => item._id !== result._id);
+  }
+
+  async function todoList() {
+    const result = await addTodo({ title, completed: false });
+    title = "";
+    list = [...list, result];
   }
 </script>
 
