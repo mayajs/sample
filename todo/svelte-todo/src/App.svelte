@@ -1,10 +1,11 @@
 <script>
-  import { Container, Col, Row, Button, InputGroup, Input, InputGroupAddon, Form } from "sveltestrap";
+  import { Container, Col, Row, Button, InputGroup, Input, InputGroupAddon, Form, ListGroup, ListGroupItem } from "sveltestrap";
   import { getTodo, getTodoList, addTodo, removeTodo } from "./api.service.js";
   import { onMount } from "svelte";
 
   let title = "";
   let list = [];
+  let isEdit = false;
 
   onMount(async () => {
     const result = await getTodoList();
@@ -14,6 +15,10 @@
   function onSubmit(event) {
     event.preventDefault();
     todoList();
+  }
+
+  function onEdit(item) {
+    event.preventDefault();
   }
 
   async function onDelete(id) {
@@ -38,34 +43,37 @@
   }
 </style>
 
-<Container>
+<Container class="container mt-4 col-md-5">
   <header class="todo text-center">
     <h1>TodoList</h1>
   </header>
-  {#each list as item (item._id)}
-    <Row>
-      <Col xs={{ size: 1 }} class="ml-3">
+  <ListGroup>
+    {#each list as item (item._id)}
+      <ListGroupItem class="list-group-item d-flex justify-content-between align-items-center">
         <input type="checkbox" checked={item.completed} />
-      </Col>
-      <Col>
-        <h4>{item.title}</h4>
-      </Col>
-      <Col xs={{ size: 1, offset: 1 }} style="padding:.2rem">
-        <Button color="danger" on:click={() => onDelete(item._id)}>
+        <span class="flex-grow-1 ml-1">{item.title}</span>
+        <Button class="btn btn-info mx-1" on:click={() => onEdit(item)}>
+          <span class="fas fa-edit" />
+        </Button>
+        <Button color="btn btn-danger mx-1" on:click={() => onDelete(item._id)}>
           <span class="fas fa-trash" />
         </Button>
+      </ListGroupItem>
+    {:else}
+      <Col class="text-center">
+        <h4>There are no todo item to show...</h4>
       </Col>
-    </Row>
-  {:else}
-    <Col class="text-center">
-      <h4>There are no todo item to show...</h4>
-    </Col>
-  {/each}
-  <Form class="px-3 mt-2" on:submit={onSubmit}>
+    {/each}
+  </ListGroup>
+  <Form class="mt-2" on:submit={onSubmit}>
     <InputGroup>
       <Input type="text" bind:value={title} placeholder="Enter TODO here..." readonly={false} />
       <InputGroupAddon addonType="append">
-        <Button disabled={title === ''} color="success" type="submit " id="submit-btn">Add</Button>
+        {#if isEdit}
+          <Button disabled={title === ''} color="primary" type="submit " id="submit-btn">Update</Button>
+        {:else}
+          <Button disabled={title === ''} color="success" type="submit " id="submit-btn">Add</Button>
+        {/if}
       </InputGroupAddon>
     </InputGroup>
   </Form>
