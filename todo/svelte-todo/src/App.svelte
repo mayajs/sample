@@ -3,9 +3,9 @@
 
   let title = "";
   let list = [
-    /*  { title: "Sleeping", completed: false, id: 1 },
+    { title: "Sleeping", completed: false, id: 1 },
     { title: "Walking", completed: false, id: 2 },
-    { title: "Eating", completed: false, id: 3 }, */
+    { title: "Eating", completed: false, id: 3 },
   ];
 
   function onSubmit(event) {
@@ -33,7 +33,7 @@
   </header>
   {#each list as item (item.id)}
     <Row>
-      <Col xs={{ size: 1, offset: 1 }}>
+      <Col xs={{ size: 1 }} class="ml-3">
         <input type="checkbox" checked={item.completed} />
       </Col>
       <Col>
