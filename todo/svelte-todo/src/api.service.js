@@ -40,3 +40,16 @@ export const removeTodo = async (id) => {
 
     return await response.json();
 };
+
+export const updateTodo = async (data) => {
+    const response = await fetch(`${API_URL}/${data._id}`, {
+        method: 'PATCH',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    return await response.json();
+};
