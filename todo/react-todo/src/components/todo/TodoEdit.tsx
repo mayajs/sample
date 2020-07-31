@@ -15,8 +15,6 @@ export default class TodoAdd extends Component<IPropsTodoEdit> {
     this.setState({ title: "" });
   };
 
-  btnStyle = { flex: "2", backgroundColor: "#333", color: "white", cursor: "pointer" };
-
   render() {
     return (
       <form onSubmit={this.onSubmit}>
