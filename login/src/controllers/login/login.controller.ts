@@ -12,8 +12,8 @@ export class LoginController {
   constructor(private services: LoginServices) {}
   
   @Post({ path: "/", middlewares: [] })
-  root(req: Request, res: Response, next: NextFunction): void {
-    const result = this.services.login(req.body);
+  async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const result = await this.services.login(req.body);
     res.send(result);
   }
 }
