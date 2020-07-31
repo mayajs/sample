@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DatabaseService {
+  URL = "http://localhost:3333/";
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  get(value: string): any {
+    return this.http.get(this.URL + value);
+  }
 }
