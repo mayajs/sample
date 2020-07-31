@@ -2,6 +2,7 @@
 <div class="card" *ngIf="todoList.length > 0">
   <ul class="list-group">
     <li class="list-group-item d-flex" *ngFor="let todo of todoList">
+      <input class="form-check-input mr-1" type="checkbox" [(ngModel)]="todo.completed" (change)="onChange(todo, $event)" />
       <span class="flex-grow-1 ml-1">{{ todo.title }}</span>
 
       <button class="btn btn-action btn-success badge" (click)="editTodo(todo)">
@@ -15,9 +16,9 @@
   </ul>
 </div>
 <div class="d-flex mt-3">
-  <input class="form-control mr-2" type="text" placeholder="Type here..." [(ngModel)]="todo" />
+  <input class="form-control mr-2" type="text" placeholder="Type here..." [(ngModel)]="title" />
   <input type="text" [(ngModel)]="id" *ngIf="isEdit" hidden />
 
-  <button class="btn btn-primary" *ngIf="!isEdit" (click)="addTodo()">Submit</button>
-  <button class="btn btn-primary" *ngIf="isEdit" (click)="patchTodo(id)">Edit</button>
+  <button class="btn btn-success" *ngIf="!isEdit" (click)="addTodo()">Add</button>
+  <button class="btn btn-primary" *ngIf="isEdit" (click)="patchTodo(id)">Update</button>
 </div>
