@@ -1,4 +1,5 @@
-# Svelte / Mayajs Todo App
+<p align="center"><img src="https://github.com/mayajs/sample/blob/master/assets/maya-svelte.png"></p>
+<h1 align="center">Mayajs Svelte Todo App</h1>
 
 ## Description
 
