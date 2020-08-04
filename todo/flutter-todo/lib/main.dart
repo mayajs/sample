@@ -43,6 +43,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTodo(todo) {
+    setState(() {
+      todoService.delete(todo).then((String message) {
+        _toastBuilder(message);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,11 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: Icons.delete,
         color: Colors.red,
         onTap: () {
-          setState(() {
-            todoService.delete(todo).then((String message) {
-              _toastBuilder(message);
-            });
-          });
+          _deleteTodo(todo);
         },
       )
     ];
