@@ -181,6 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _showTodoDialog(TodoModel todo) async {
     String title = todo != null ? 'Edit TODO' : 'Add TODO';
+    String text = todo != null ? todo.title : null;
     String id = todo != null ? todo.id : null;
     return showDialog<void>(
       context: context,
@@ -188,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(title),
-          content: _dialogContent(),
+          content: _dialogContent(text),
           actions: <Widget>[
             _cancelButton(),
             _submitButtonBuilder(id),
@@ -198,7 +199,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _dialogContent() {
+  Widget _dialogContent(text) {
+    todoController.text = text;
     return SingleChildScrollView(
       child: TextField(
         controller: todoController,
