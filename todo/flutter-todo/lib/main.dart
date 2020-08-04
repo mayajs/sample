@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _floatingActionButton() {
     return FloatingActionButton(
       onPressed: () {
-        _showAddTodoDialog();
+        _showTodoDialog(null);
       },
       tooltip: 'Add TODO',
       child: Icon(Icons.add),
@@ -124,12 +124,8 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Row(
-            children: _checkboxAndLabel(todo),
-          ),
-          Row(
-            children: _actionButtons(todo),
-          ),
+          Row(children: _checkboxAndLabel(todo)),
+          Row(children: _actionButtons(todo)),
         ],
       ),
     );
@@ -160,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: Icons.edit,
         color: Colors.green,
         onTap: () {
-          _showEditTodoDialog(todo);
+          _showTodoDialog(todo);
         },
       ),
       _buttonBuilder(
@@ -183,17 +179,19 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<void> _showAddTodoDialog() async {
+  Future<void> _showTodoDialog(TodoModel todo) async {
+    String title = todo != null ? 'Edit TODO' : 'Add TODO';
+    String id = todo != null ? todo.id : null;
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add TODO'),
+          title: Text(title),
           content: _dialogContent(),
           actions: <Widget>[
             _cancelButton(),
-            _submitButtonBuilder(null),
+            _submitButtonBuilder(id),
           ],
         );
       },
