@@ -193,10 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
           content: _dialogContent(),
           actions: <Widget>[
             _cancelButton(),
-            _submitButtonBuilder(() {
-              _postTodo();
-              Navigator.of(context).pop();
-            }),
+            _submitButtonBuilder(null),
           ],
         );
       },
@@ -213,10 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
           content: _dialogContent(),
           actions: <Widget>[
             _cancelButton(),
-            _submitButtonBuilder(() {
-              _patchTitle(todo.id);
-              Navigator.of(context).pop();
-            }),
+            _submitButtonBuilder(todo.id),
           ],
         );
       },
@@ -244,10 +238,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _submitButtonBuilder(void Function() onPressed) {
+  Widget _submitButtonBuilder(String id) {
     return FlatButton(
       child: Text('Submit'),
-      onPressed: onPressed,
+      onPressed: () {
+        id != null ? _patchTitle(id) : _postTodo();
+        Navigator.of(context).pop();
+      },
     );
   }
 
