@@ -31,11 +31,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TodoService todoService = TodoService();
-  final todoController = TextEditingController();
+  final titleController = TextEditingController();
 
   void _postTodo() {
     setState(() {
-      TodoModel post = TodoModel(title: todoController.text, completed: false);
+      TodoModel post = TodoModel(title: titleController.text, completed: false);
       todoService.post(post).then((String message) {
         _toastBuilder(message);
       });
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _patchTitle({String id, bool completed}) {
     setState(() {
-      String title = todoController.text;
+      String title = titleController.text;
       TodoModel patch = TodoModel(id: id, title: title, completed: completed);
       todoService.patch(patch).then((String message) {
         _toastBuilder(message);
@@ -194,10 +194,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _dialogContent(text) {
-    todoController.text = text;
+    titleController.text = text;
     return SingleChildScrollView(
       child: TextField(
-        controller: todoController,
+        controller: titleController,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: 'Enter TODO',
@@ -223,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? _patchTitle(id: todo.id, completed: todo.completed)
             : _postTodo();
         Navigator.of(context).pop();
-        todoController.clear();
+        titleController.clear();
       },
     );
   }
