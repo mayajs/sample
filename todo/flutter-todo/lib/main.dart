@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _patchCompleted({String id, String title, bool completed}) {
     setState(() {
       todoService
-          .patch(TodoModel(id: id, title: title, completed: !completed))
+          .patch(TodoModel(id: id, title: title, completed: completed))
           .then((String message) {
         _toastBuilder(message);
       });
@@ -58,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
           .then((String message) {
         _toastBuilder(message);
       });
+      todoController.clear();
     });
   }
 
@@ -69,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           .then((String message) {
         _toastBuilder(message);
       });
+      todoController.clear();
     });
   }
 
@@ -99,7 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _floatingActionButton() {
     return FloatingActionButton(
       onPressed: () {
-        todoController.clear();
         _showAddTodoDialog();
       },
       tooltip: 'Add TODO',
@@ -159,7 +160,6 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: Icons.edit,
         color: Colors.green,
         onTap: () {
-          todoController.clear();
           _showEditTodoDialog(todo);
         },
       ),
