@@ -39,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
       todoService.post(post).then((String message) {
         _toastBuilder(message);
       });
-      todoController.clear();
     });
   }
 
@@ -50,7 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
       todoService.patch(patch).then((String message) {
         _toastBuilder(message);
       });
-      todoController.clear();
     });
   }
 
@@ -225,6 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? _patchTitle(id: todo.id, completed: todo.completed)
             : _postTodo();
         Navigator.of(context).pop();
+        todoController.clear();
       },
     );
   }
