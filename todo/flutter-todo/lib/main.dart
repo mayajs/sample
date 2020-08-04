@@ -198,23 +198,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<void> _showEditTodoDialog(TodoModel todo) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Edit ${todo.title}'),
-          content: _dialogContent(),
-          actions: <Widget>[
-            _cancelButton(),
-            _submitButtonBuilder(todo.id),
-          ],
-        );
-      },
-    );
-  }
-
   Widget _dialogContent() {
     return SingleChildScrollView(
       child: TextField(
