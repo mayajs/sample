@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _checkboxAndLabel(List<TodoModel> todos, int index) {
+  List<Widget> _checkboxAndLabel(List<TodoModel> todos, int index) {
     return <Widget>[
       Checkbox(
         value: todos[index].completed,
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
-  _actionButtons(List<TodoModel> todos, int index) {
+  List<Widget> _actionButtons(List<TodoModel> todos, int index) {
     return <Widget>[
       _buttonBuilder(
           icon: Icons.edit,
