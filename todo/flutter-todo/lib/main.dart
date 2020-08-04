@@ -33,28 +33,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final TodoService todoService = TodoService();
   final todoController = TextEditingController();
 
-  void _patchCompleted({String id, String title, bool completed}) {
-    setState(() {
-      TodoModel patch = TodoModel(id: id, title: title, completed: completed);
-      todoService.patch(patch).then((String message) {
-        _toastBuilder(message);
-      });
-    });
-  }
-
-  void _deleteTodo(TodoModel todo) {
-    setState(() {
-      todoService.delete(todo).then((String message) {
-        _toastBuilder(message);
-      });
-    });
-  }
-
   void _postTodo() {
     setState(() {
-      todoService
-          .post(TodoModel(title: todoController.text, completed: false))
-          .then((String message) {
+      TodoModel post = TodoModel(title: todoController.text, completed: false);
+      todoService.post(post).then((String message) {
         _toastBuilder(message);
       });
       todoController.clear();
@@ -69,6 +51,23 @@ class _MyHomePageState extends State<MyHomePage> {
         _toastBuilder(message);
       });
       todoController.clear();
+    });
+  }
+
+  void _patchCompleted({String id, String title, bool completed}) {
+    setState(() {
+      TodoModel patch = TodoModel(id: id, title: title, completed: completed);
+      todoService.patch(patch).then((String message) {
+        _toastBuilder(message);
+      });
+    });
+  }
+
+  void _deleteTodo(TodoModel todo) {
+    setState(() {
+      todoService.delete(todo).then((String message) {
+        _toastBuilder(message);
+      });
     });
   }
 
