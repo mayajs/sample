@@ -51,6 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _postTodo() {
+    setState(() {
+      todoService
+          .post(TodoModel(title: todoController.text, completed: false))
+          .then((String message) {
+        _toastBuilder(message);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,14 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: <Widget>[
             _cancelButton(),
             _submitButtonBuilder(() {
-              setState(() {
-                todoService
-                    .post(
-                        TodoModel(title: todoController.text, completed: false))
-                    .then((String message) {
-                  _toastBuilder(message);
-                });
-              });
+              _postTodo();
               Navigator.of(context).pop();
             }),
           ],
