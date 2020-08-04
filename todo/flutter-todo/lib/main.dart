@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       future: todoService.getAll(),
       builder: (BuildContext context, AsyncSnapshot<List<TodoModel>> snapshot) {
         if (snapshot.hasData) {
-          return _todoBuilder(todos: snapshot.data);
+          return _todoBuilder(snapshot.data);
         }
 
         return Center(child: CircularProgressIndicator());
@@ -59,60 +59,60 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _floatingActionButton() {
     return FloatingActionButton(
-      onPressed: () => {
-        todoController.clear(),
-        _showAddTodoDialog(),
+      onPressed: () {
+        todoController.clear();
+        _showAddTodoDialog();
       },
       tooltip: 'Add TODO',
       child: Icon(Icons.add),
     );
   }
 
-  Widget _todoBuilder({List<TodoModel> todos}) {
+  Widget _todoBuilder(List<TodoModel> todos) {
     return ListView.builder(
       padding: EdgeInsets.all(10),
       itemCount: todos.length,
       itemBuilder: (BuildContext context, int index) {
-        return _todoContent(todos, index);
+        return _todoContent(todos[index]);
       },
     );
   }
 
-  Widget _todoContent(List<TodoModel> todos, int index) {
+  Widget _todoContent(TodoModel todo) {
     return Container(
       height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(
-            children: _checkboxAndLabel(todos, index),
+            children: _checkboxAndLabel(todo),
           ),
           Row(
-            children: _actionButtons(todos, index),
+            children: _actionButtons(todo),
           ),
         ],
       ),
     );
   }
 
-  List<Widget> _checkboxAndLabel(List<TodoModel> todos, int index) {
+  List<Widget> _checkboxAndLabel(TodoModel todo) {
     return <Widget>[
       Checkbox(
-        value: todos[index].completed,
+        value: todo.completed,
         onChanged: (value) {
-          value = todos[index].completed;
+          value = todo.completed;
           setState(() {
             todoService
                 .patch(TodoModel(
-                    id: todos[index].id,
-                    title: todos[index].title,
-                    completed: !value))
-                .then((String message) => _toastBuilder(message));
+                    id: todo.id, title: todo.title, completed: !value))
+                .then((String message) {
+              _toastBuilder(message);
+            });
           });
         },
       ),
       Text(
-        todos[index].title,
+        todo.title,
         style: TextStyle(
           fontSize: 20,
           height: 1,
@@ -121,22 +121,25 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
-  List<Widget> _actionButtons(List<TodoModel> todos, int index) {
+  List<Widget> _actionButtons(TodoModel todo) {
     return <Widget>[
       _buttonBuilder(
-          icon: Icons.edit,
-          color: Colors.green,
-          onTap: () =>
-              {todoController.clear(), _showEditTodoDialog(todos[index])}),
+        icon: Icons.edit,
+        color: Colors.green,
+        onTap: () {
+          todoController.clear();
+          _showEditTodoDialog(todo);
+        },
+      ),
       _buttonBuilder(
         icon: Icons.delete,
         color: Colors.red,
-        onTap: () => {
+        onTap: () {
           setState(() {
-            todoService
-                .delete(todos[index])
-                .then((String message) => _toastBuilder(message));
-          }),
+            todoService.delete(todo).then((String message) {
+              _toastBuilder(message);
+            });
+          });
         },
       )
     ];
@@ -162,15 +165,17 @@ class _MyHomePageState extends State<MyHomePage> {
           content: _dialogContent(),
           actions: <Widget>[
             _cancelButton(),
-            _submitButtonBuilder(() => {
-                  setState(() {
-                    todoService
-                        .post(TodoModel(
-                            title: todoController.text, completed: false))
-                        .then((String message) => _toastBuilder(message));
-                  }),
-                  Navigator.of(context).pop(),
-                }),
+            _submitButtonBuilder(() {
+              setState(() {
+                todoService
+                    .post(
+                        TodoModel(title: todoController.text, completed: false))
+                    .then((String message) {
+                  _toastBuilder(message);
+                });
+              });
+              Navigator.of(context).pop();
+            }),
           ],
         );
       },
@@ -188,16 +193,18 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: <Widget>[
             _cancelButton(),
             _submitButtonBuilder(
-              () => {
+              () {
                 setState(() {
                   todoService
                       .patch(TodoModel(
                           id: todo.id,
                           title: todoController.text,
                           completed: false))
-                      .then((String message) => _toastBuilder(message));
-                }),
-                Navigator.of(context).pop(),
+                      .then((String message) {
+                    _toastBuilder(message);
+                  });
+                });
+                Navigator.of(context).pop();
               },
             ),
           ],
