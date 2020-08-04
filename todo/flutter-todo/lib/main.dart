@@ -35,15 +35,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _patchCompleted({String id, String title, bool completed}) {
     setState(() {
-      todoService
-          .patch(TodoModel(id: id, title: title, completed: completed))
-          .then((String message) {
+      TodoModel patch = TodoModel(id: id, title: title, completed: completed);
+      todoService.patch(patch).then((String message) {
         _toastBuilder(message);
       });
     });
   }
 
-  void _deleteTodo(todo) {
+  void _deleteTodo(TodoModel todo) {
     setState(() {
       todoService.delete(todo).then((String message) {
         _toastBuilder(message);
@@ -62,12 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _patchTitle(String id) {
+  void _patchTitle({String id, bool completed}) {
     setState(() {
-      todoService
-          .patch(
-              TodoModel(id: id, title: todoController.text, completed: false))
-          .then((String message) {
+      String title = todoController.text;
+      TodoModel patch = TodoModel(id: id, title: title, completed: completed);
+      todoService.patch(patch).then((String message) {
         _toastBuilder(message);
       });
       todoController.clear();
@@ -182,7 +180,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _showTodoDialog(TodoModel todo) async {
     String title = todo != null ? 'Edit TODO' : 'Add TODO';
     String text = todo != null ? todo.title : null;
-    String id = todo != null ? todo.id : null;
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -192,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
           content: _dialogContent(text),
           actions: <Widget>[
             _cancelButton(),
-            _submitButtonBuilder(id),
+            _submitButtonBuilder(todo),
           ],
         );
       },
@@ -221,11 +218,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _submitButtonBuilder(String id) {
+  Widget _submitButtonBuilder(TodoModel todo) {
     return FlatButton(
       child: Text('Submit'),
       onPressed: () {
-        id != null ? _patchTitle(id) : _postTodo();
+        todo != null
+            ? _patchTitle(id: todo.id, completed: todo.completed)
+            : _postTodo();
         Navigator.of(context).pop();
       },
     );
