@@ -61,6 +61,17 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _patchTitle(String id) {
+    setState(() {
+      todoService
+          .patch(
+              TodoModel(id: id, title: todoController.text, completed: false))
+          .then((String message) {
+        _toastBuilder(message);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -202,21 +213,10 @@ class _MyHomePageState extends State<MyHomePage> {
           content: _dialogContent(),
           actions: <Widget>[
             _cancelButton(),
-            _submitButtonBuilder(
-              () {
-                setState(() {
-                  todoService
-                      .patch(TodoModel(
-                          id: todo.id,
-                          title: todoController.text,
-                          completed: false))
-                      .then((String message) {
-                    _toastBuilder(message);
-                  });
-                });
-                Navigator.of(context).pop();
-              },
-            ),
+            _submitButtonBuilder(() {
+              _patchTitle(todo.id);
+              Navigator.of(context).pop();
+            }),
           ],
         );
       },
