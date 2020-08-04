@@ -33,6 +33,16 @@ class _MyHomePageState extends State<MyHomePage> {
   final TodoService todoService = TodoService();
   final todoController = TextEditingController();
 
+  void _patchCompleted({String id, String title, bool completed}) {
+    setState(() {
+      todoService
+          .patch(TodoModel(id: id, title: title, completed: !completed))
+          .then((String message) {
+        _toastBuilder(message);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,14 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
         value: todo.completed,
         onChanged: (value) {
           value = todo.completed;
-          setState(() {
-            todoService
-                .patch(TodoModel(
-                    id: todo.id, title: todo.title, completed: !value))
-                .then((String message) {
-              _toastBuilder(message);
-            });
-          });
+          _patchCompleted(id: todo.id, title: todo.title, completed: !value);
         },
       ),
       Text(
