@@ -15,6 +15,16 @@ export class UserServices {
     }
   }
 
+  async byID(id: string) {
+    try {
+      return this.model.findAll({
+        where: { id },
+      });
+    } catch (error) {
+      return error;
+    }
+  }
+
   async create(body: any) {
     try {
       return this.model.create(body);

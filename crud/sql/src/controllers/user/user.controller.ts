@@ -15,6 +15,11 @@ export class UserController {
     res.send(await this.services.all());
   }
 
+  @Get({ path: "/:id", middlewares: [] })
+  async byId(req: Request, res: Response, next: NextFunction): Promise<void> {
+    res.send(await this.services.byID(req.params.id));
+  }
+
   @Post({ path: "/", middlewares: [] })
   async addUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     res.send(await this.services.create(req.body));
