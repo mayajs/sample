@@ -1,11 +1,10 @@
 import { Injectable } from "@mayajs/core";
 
 @Injectable()
-export class SampleServices {
+export class UserServices {
   constructor() {}
-  
+
   hello() {
     return "Hello world!";
   }
-
 }
