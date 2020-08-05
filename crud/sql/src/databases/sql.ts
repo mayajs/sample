@@ -13,6 +13,6 @@ export = Sql({
     },
   },
   schemas: [
-    sample, // Add Mongoose Schema here
+    sample, // Add Sql Schema here
   ],
 });
