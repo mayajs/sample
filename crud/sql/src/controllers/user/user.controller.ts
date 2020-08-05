@@ -24,4 +24,9 @@ export class UserController {
   async addUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     res.send(await this.services.create(req.body));
   }
+
+  @Patch({ path: "/:id", middlewares: [] })
+  async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+    res.send(await this.services.update(req.params.id, req.body));
+  }
 }
