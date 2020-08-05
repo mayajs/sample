@@ -14,4 +14,9 @@ export class UserController {
   root(req: Request, res: Response, next: NextFunction): void {
     res.send(this.services.hello());
   }
+
+  @Post({ path: "/", middlewares: [] })
+  async addUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+    res.send(await this.services.create(req.body));
+  }
 }
