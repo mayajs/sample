@@ -29,4 +29,9 @@ export class UserController {
   async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     res.send(await this.services.update(req.params.id, req.body));
   }
+
+  @Delete({ path: "/:id", middlewares: [] })
+  async deleteUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+    res.send(await this.services.delete(req.params.id));
+  }
 }

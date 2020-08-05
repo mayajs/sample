@@ -46,4 +46,15 @@ export class UserServices {
       return error;
     }
   }
+
+  async delete(id: string) {
+    try {
+      await this.model.destroy({
+        where: { id },
+      });
+      return `User id ${id} is deleted!`;
+    } catch (error) {
+      return error;
+    }
+  }
 }
