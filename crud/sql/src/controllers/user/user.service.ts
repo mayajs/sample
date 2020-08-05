@@ -7,13 +7,17 @@ export class UserServices {
 
   constructor() {}
 
-  hello() {
-    return "Hello world!";
+  async all() {
+    try {
+      return this.model.findAll();
+    } catch (error) {
+      return error;
+    }
   }
 
   async create(body: any) {
     try {
-      await this.model.create(body);
+      return this.model.create(body);
     } catch (error) {
       return error;
     }

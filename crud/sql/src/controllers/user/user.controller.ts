@@ -11,8 +11,8 @@ export class UserController {
   constructor(private services: UserServices) {}
 
   @Get({ path: "/", middlewares: [] })
-  root(req: Request, res: Response, next: NextFunction): void {
-    res.send(this.services.hello());
+  async allUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+    res.send(await this.services.all());
   }
 
   @Post({ path: "/", middlewares: [] })
