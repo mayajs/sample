@@ -1,8 +1,8 @@
-import { SampleController } from "./controllers/sample/sample.controller";
+import { UserController } from "./controllers/user/user.controller";
 
 export const routes = [
   {
-    controllers: [SampleController],
+    controllers: [UserController],
     middlewares: [],
     path: "",
   },
