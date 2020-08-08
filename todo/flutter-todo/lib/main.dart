@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _floatingActionButton() {
     return FloatingActionButton(
       onPressed: () {
-        _showTodoDialog(null);
+        _showTodoDialog();
       },
       tooltip: 'Add TODO',
       child: Icon(Icons.add),
@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: Icons.edit,
         color: Colors.green,
         onTap: () {
-          _showTodoDialog(todo);
+          _showTodoDialog(todo: todo, isEdited: true);
         },
       ),
       _buttonBuilder(
@@ -174,9 +174,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<void> _showTodoDialog(TodoModel todo) async {
-    String title = todo != null ? 'Edit TODO' : 'Add TODO';
-    String text = todo != null ? todo.title : null;
+  Future<void> _showTodoDialog({TodoModel todo, bool isEdited = false}) async {
+    String title = isEdited ? 'Edit TODO' : 'Add TODO';
+    String text = isEdited ? todo.title : '';
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -186,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
           content: _dialogContent(text),
           actions: <Widget>[
             _cancelButton(),
-            _submitButtonBuilder(todo),
+            _submitButtonBuilder(todo: todo, isEdited: isEdited),
           ],
         );
       },
@@ -215,11 +215,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _submitButtonBuilder(TodoModel todo) {
+  Widget _submitButtonBuilder({TodoModel todo, bool isEdited}) {
     return FlatButton(
       child: Text('Submit'),
       onPressed: () {
-        todo != null
+        isEdited
             ? _patchTitle(id: todo.id, completed: todo.completed)
             : _postTodo();
         Navigator.of(context).pop();
