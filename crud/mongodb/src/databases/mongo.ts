@@ -1,10 +1,10 @@
 import { Mongo } from "@mayajs/mongo";
-import sample from "../controllers/sample/sample.model";
+import users from "../controllers/users/users.model";
 
 export = Mongo({
   name: "your-db-name-here",
   connectionString: "your-connection-string-here",
   schemas: [
-    sample, // Add Mongoose Schema here
+    users, // Add Mongoose Schema here
   ],
 });
