@@ -24,9 +24,9 @@ class TodoService {
         await http.post(url, headers: headers, body: convert.jsonEncode(todo));
 
     if (res.statusCode == 200) {
-      return "${todo.title} is successfully added.";
+      return "${todo.title.toUpperCase()} is successfully added.";
     } else {
-      return "Can't add ${todo.title}!";
+      return "Can't add ${todo.title.toUpperCase()}!";
     }
   }
 
@@ -35,9 +35,9 @@ class TodoService {
         headers: headers, body: convert.jsonEncode(todo));
 
     if (res.statusCode == 200) {
-      return "${todo.title} is successfully updated.";
+      return "${todo.title.toUpperCase()} is successfully updated.";
     } else {
-      return "Can't update ${todo.title}!";
+      return "Can't update ${todo.title.toUpperCase()}!";
     }
   }
 
@@ -45,9 +45,9 @@ class TodoService {
     http.Response res = await http.delete('$url/${todo.id}', headers: headers);
 
     if (res.statusCode == 200) {
-      return "${todo.title} is successfully deleted.";
+      return "${todo.title.toUpperCase()} is successfully deleted.";
     } else {
-      return "Can't delete ${todo.title}!";
+      return "Can't delete ${todo.title.toUpperCase()}!";
     }
   }
 }
