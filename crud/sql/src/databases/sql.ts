@@ -2,9 +2,9 @@ import { Sql } from "@mayajs/sql";
 import sample from "../controllers/user/user.model";
 
 export = Sql({
-  name: "sample",
+  name: "your-database-name",
   options: {
-    database: "test",
+    database: "root",
     username: "root",
     password: "",
     options: {
