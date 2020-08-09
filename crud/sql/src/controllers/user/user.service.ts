@@ -1,16 +1,17 @@
-import { Injectable } from "@mayajs/core";
+import { ModelCtor, Model, Sequelize } from "sequelize";
+import { Injectable, Database } from "@mayajs/core";
 import { Models } from "@mayajs/sql";
-import { ModelCtor, Model } from "sequelize";
 
 @Injectable()
 export class UserServices {
   @Models("user") model!: ModelCtor<Model<any, any>>;
+  @Database<Sequelize, ModelCtor<Model<any, any>>>("sql") db: any;
 
   constructor() {}
 
   async all() {
     try {
-      return this.model.findAll();
+      return this.db.models.user.findAll();
     } catch (error) {
       return error;
     }
